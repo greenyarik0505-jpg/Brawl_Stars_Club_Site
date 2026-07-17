@@ -1344,11 +1344,11 @@ function renderMembersList() {
     }
 
     container.innerHTML = members.map((m, index) => `
-        <div class="member-card reveal" style="animation-delay: ${index * 0.05}s;">
+        <div class="member-card reveal ${getRoleBadgeClass(m.role)}" style="animation-delay: ${index * 0.05}s;">
             <div class="member-avatar">${m.avatar}</div>
             <div class="member-info">
                 <h3 class="member-name">${escapeHtml(m.name)}</h3>
-                <span class="role-badge ${getRoleBadgeClass(m.role)}">${escapeHtml(m.role)}</span>
+                <span class="member-role">${escapeHtml(m.role)}</span>
             </div>
             <div class="member-trophies">
                 <span class="trophy-icon">🏆</span>
@@ -1682,7 +1682,7 @@ function debounce(fn, delay) {
 function getRoleBadgeClass(role) {
     const map = {
         "Президент": "role-president",
-        "Вице-президент": "role-vice",
+        "Вице-президент": "role-vice-president",
         "Ветеран": "role-veteran",
         "Участник": "role-member"
     };
