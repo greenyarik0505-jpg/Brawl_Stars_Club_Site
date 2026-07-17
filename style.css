@@ -687,7 +687,7 @@ ul, ol { list-style: none; }
    ========================================================== */
 .grid-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--space-md);
   margin-bottom: var(--space-xl);
 }
@@ -699,15 +699,16 @@ ul, ol { list-style: none; }
   border: 1px solid var(--border-color);
   border-left: 4px solid var(--accent-cyan);
   border-radius: var(--radius-md);
-  padding: var(--space-md);
+  padding: 0.75rem var(--space-md);
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: 0.75rem;
   box-shadow: var(--shadow-card);
   transition: transform var(--transition-base),
               box-shadow var(--transition-base),
               border-color var(--transition-base);
   position: relative;
+  min-width: 0;
 }
 
 .stat-card:nth-child(1) { border-left-color: var(--accent-gold); }
@@ -722,12 +723,12 @@ ul, ol { list-style: none; }
 
 .card-icon,
 .stat-icon {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   border-radius: var(--radius-sm);
   background: rgba(0, 229, 255, 0.1);
   flex-shrink: 0;
@@ -745,19 +746,20 @@ ul, ol { list-style: none; }
 .stat-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   min-width: 0;
+  flex-grow: 1;
 }
 
 .stat-value {
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   font-weight: 800;
   line-height: 1.1;
   white-space: nowrap;
 }
 
 .stat-label {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
