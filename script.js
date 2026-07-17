@@ -1244,23 +1244,31 @@ function renderClubStats() {
     container.innerHTML = `
         <div class="stat-card reveal">
             <div class="stat-icon">👥</div>
-            <div class="stat-value" data-target="${clubData.members.length}">0</div>
-            <div class="stat-label">Участников</div>
+            <div class="stat-info">
+                <div class="stat-value" data-target="${clubData.members.length}">0</div>
+                <div class="stat-label">Участников</div>
+            </div>
         </div>
         <div class="stat-card reveal">
             <div class="stat-icon">🏆</div>
-            <div class="stat-value" data-target="${totalTrophies}">0</div>
-            <div class="stat-label">Общие трофеи</div>
+            <div class="stat-info">
+                <div class="stat-value" data-target="${totalTrophies}">0</div>
+                <div class="stat-label">Общие трофеи</div>
+            </div>
         </div>
         <div class="stat-card reveal">
             <div class="stat-icon">📊</div>
-            <div class="stat-value" data-target="${avgTrophies}">0</div>
-            <div class="stat-label">Средние трофеи</div>
+            <div class="stat-info">
+                <div class="stat-value" data-target="${avgTrophies}">0</div>
+                <div class="stat-label">Средние трофеи</div>
+            </div>
         </div>
         <div class="stat-card reveal">
             <div class="stat-icon">⚡</div>
-            <div class="stat-value" data-target="${clubData.info.requiredTrophies}">0</div>
-            <div class="stat-label">Порог входа</div>
+            <div class="stat-info">
+                <div class="stat-value" data-target="${clubData.info.requiredTrophies}">0</div>
+                <div class="stat-label">Порог входа</div>
+            </div>
         </div>
     `;
 
