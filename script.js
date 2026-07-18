@@ -1001,13 +1001,10 @@ function saveNewsFromModal() {
 }
 
 /**
- * Удалить новость по ID (с подтверждением)
+ * Удалить новость по ID
  * @param {string} newsId
  */
-async function deleteNews(newsId) {
-    const confirmed = await showConfirm("Удалить эту новость? Действие нельзя отменить.");
-    if (!confirmed) return;
-
+function deleteNews(newsId) {
     clubData.news = clubData.news.filter((n) => n.id !== newsId);
     saveState();
     renderUI();
@@ -1102,17 +1099,14 @@ function saveMemberFromModal() {
 }
 
 /**
- * Удалить участника (с подтверждением)
+ * Удалить участника
  * @param {string} memberId
  */
-async function deleteMember(memberId) {
-    const confirmed = await showConfirm("Удалить этого участника?");
-    if (!confirmed) return;
-
+function deleteMember(memberId) {
     clubData.members = clubData.members.filter((m) => m.id !== memberId);
     saveState();
     renderUI();
-    showToast("Участник удалён", "info");
+    showToast("Участник удален", "info");
 }
 
 
@@ -1203,13 +1197,10 @@ function saveEventFromModal() {
 }
 
 /**
- * Удалить событие (с подтверждением)
+ * Удалить событие
  * @param {string} eventId
  */
-async function deleteEvent(eventId) {
-    const confirmed = await showConfirm("Удалить это событие?");
-    if (!confirmed) return;
-
+function deleteEvent(eventId) {
     clubData.events = clubData.events.filter((ev) => ev.id !== eventId);
     saveState();
     renderUI();
