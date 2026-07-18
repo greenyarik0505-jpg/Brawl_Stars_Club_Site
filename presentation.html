@@ -56,7 +56,14 @@
             position: absolute; width: 100%; height: 100%;
             top: 0; left: 0; z-index: 0; pointer-events: none;
         }
-        .reveal { z-index: 1; }
+        .reveal { 
+            z-index: 1; 
+            --r-controls-color: #FFFFFF !important; /* Белые стрелки */
+        }
+        
+        .reveal .controls button {
+            color: #FFFFFF !important;
+        }
 
         /* Typography - Base values for PC */
         .reveal h1, .reveal h2, .reveal h3 {
