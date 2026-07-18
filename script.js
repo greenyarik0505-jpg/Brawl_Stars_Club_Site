@@ -1,7 +1,7 @@
 // ============================================================
 // 🎮 Brawl Stars Club — Священная Империя | script.js
 // ============================================================
-const SITE_VERSION = "7";
+const SITE_VERSION = "8";
 console.log("%c🎮 Сайт загружен | Версия: " + SITE_VERSION, "color: #00e5ff; font-size: 16px; font-weight: bold;");
 // Полнофункциональный скрипт для клубного сайта.
 // Содержит: управление состоянием, навигацию, анимации,
@@ -2139,70 +2139,6 @@ function getEventTypeLabel(type) {
 // ============================================================
 
 
-// ============================================================
-// 18. ГЛОБАЛЬНЫЕ CRUD-ФУНКЦИИ (для onclick в HTML)
-// ============================================================
-
-/** Редактирование новости */
-window.editNews = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    openNewsModal(id);
-};
-
-/** Удаление новости */
-window.deleteNews = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    deleteNews(id);
-};
-
-/** Редактирование участника */
-window.editMember = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    openMemberModal(id);
-};
-
-/** Удаление участника */
-window.deleteMember = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    deleteMember(id);
-};
-
-/** Редактирование события */
-window.editEvent = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    openEventModal(id);
-};
-
-/** Удаление события */
-window.deleteEvent = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    deleteEvent(id);
-};
-
-/** Редактирование фото галереи */
-window.editGalleryItem = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    openGalleryModal(id);
-};
-
-/** Удаление фото галереи */
-window.deleteGalleryItem = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    deleteGalleryItem(id);
-};
-
-/** Редактирование достижения */
-window.editAchievement = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    openAchievementModal(id);
-};
-
-/** Удаление достижения */
-window.deleteAchievement = function (id) {
-    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
-    deleteAchievement(id);
-};
-
 /**
  * Event delegation for admin table buttons (fixes mobile tap issues).
  * Mobile browsers sometimes do not fire onclick on dynamically rendered
@@ -2221,17 +2157,22 @@ window.deleteAchievement = function (id) {
         const id = btn.getAttribute("data-id");
         if (!action || !id) return;
 
+        if (!isAdminAuthenticated) {
+            showToast("Доступ запрещен!", "error");
+            return;
+        }
+
         switch (action) {
-            case "editNews": window.editNews(id); break;
-            case "deleteNews": window.deleteNews(id); break;
-            case "editMember": window.editMember(id); break;
-            case "deleteMember": window.deleteMember(id); break;
-            case "editEvent": window.editEvent(id); break;
-            case "deleteEvent": window.deleteEvent(id); break;
-            case "editGalleryItem": window.editGalleryItem(id); break;
-            case "deleteGalleryItem": window.deleteGalleryItem(id); break;
-            case "editAchievement": window.editAchievement(id); break;
-            case "deleteAchievement": window.deleteAchievement(id); break;
+            case "editNews": openNewsModal(id); break;
+            case "deleteNews": deleteNews(id); break;
+            case "editMember": openMemberModal(id); break;
+            case "deleteMember": deleteMember(id); break;
+            case "editEvent": openEventModal(id); break;
+            case "deleteEvent": deleteEvent(id); break;
+            case "editGalleryItem": openGalleryModal(id); break;
+            case "deleteGalleryItem": deleteGalleryItem(id); break;
+            case "editAchievement": openAchievementModal(id); break;
+            case "deleteAchievement": deleteAchievement(id); break;
         }
     }
 
