@@ -162,6 +162,18 @@
             .phone-mockup { width: 100%; max-width: 300px; height: 70vh; min-height: 400px; }
             .browser-mockup { height: 50vh; }
             
+            /* Force desktop view inside the iframe via CSS */
+            .browser-mockup iframe {
+                width: 1280px !important;
+                height: 2500px !important; /* Huge height so it doesn't leave empty space when scaled */
+                transform: scale(calc((100vw - 40px) / 1280)) !important;
+                transform-origin: top left !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                pointer-events: none !important;
+            }
+            
             .glass-card { padding: 15px; }
         }
     </style>
@@ -345,36 +357,6 @@
             }
             Reveal.next();
         });
-
-        // Force desktop view on mobile for the PC mockup
-        function fixDesktopMockup() {
-            const browserMockup = document.querySelector('.browser-mockup');
-            const iframe = browserMockup.querySelector('iframe');
-            
-            if (window.innerWidth <= 768) {
-                const targetWidth = 1280;
-                const containerWidth = browserMockup.clientWidth || window.innerWidth - 40;
-                const scale = containerWidth / targetWidth;
-                
-                iframe.style.width = targetWidth + 'px';
-                iframe.style.height = (browserMockup.clientHeight / scale) + 'px';
-                iframe.style.transform = `scale(${scale})`;
-                iframe.style.transformOrigin = '0 0';
-                iframe.style.position = 'absolute';
-                iframe.style.top = '0';
-                iframe.style.left = '0';
-                iframe.style.pointerEvents = 'none'; // Prevent weird scaled interactions
-            } else {
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.transform = 'none';
-                iframe.style.position = 'static';
-                iframe.style.pointerEvents = 'auto';
-            }
-        }
-        
-        window.addEventListener('resize', fixDesktopMockup);
-        Reveal.on('ready', fixDesktopMockup);
 
         particlesJS("particles-js", {
             "particles": {
