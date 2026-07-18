@@ -780,13 +780,16 @@ async function attemptAdminLogin() {
     const passwordInput = document.getElementById("adminPasswordInput");
     const loginModal = document.getElementById("adminLoginModal");
     
-    const email = emailInput ? emailInput.value.trim() : "";
+    const username = emailInput ? emailInput.value.trim() : "";
     const password = passwordInput ? passwordInput.value.trim() : "";
 
-    if (!email || !password) {
-        showToast("Введите Email и Пароль!", "error");
+    if (!username || !password) {
+        showToast("Введите Логин и Пароль!", "error");
         return;
     }
+
+    // Для Firebase Auth нам нужен формат email
+    const email = username + "@brawl.com";
 
     try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
@@ -795,7 +798,7 @@ async function attemptAdminLogin() {
         switchTab("admin");
     } catch (error) {
         console.error("Auth error:", error);
-        showToast("Неверный Email или Пароль!", "error");
+        showToast("Неверный Логин или Пароль!", "error");
         const modalContent = loginModal ? loginModal.querySelector(".modal-content") : null;
         if (modalContent) {
             modalContent.classList.add("shake");
