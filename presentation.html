@@ -293,16 +293,19 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <script>
+        // Определяем размеры в зависимости от устройства
+        const isMobile = window.innerWidth < 900;
+
         Reveal.initialize({
             hash: true,
-            controls: true, // Включил стрелочки обратно!
+            controls: true,
             progress: true,
-            center: true, // Включил центрирование обратно, чтобы не было пустых дыр снизу
+            center: true,
             transition: 'slide', 
             backgroundTransition: 'fade',
-            width: 1400, // Увеличиваем виртуальную ширину
-            height: 1000, // Увеличиваем виртуальную высоту (чтобы не сжимало текст)
-            margin: 0.04,
+            width: isMobile ? 400 : 1400, // Узкий виртуальный экран для телефонов
+            height: isMobile ? 800 : 1000, // Высокий виртуальный экран для телефонов
+            margin: isMobile ? 0.02 : 0.04,
             minScale: 0.2,
             maxScale: 2.0
         });
