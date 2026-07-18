@@ -92,6 +92,13 @@ const DEFAULT_CLUB_DATA = {
         { id: "g2", url: "https://cdn.supercell.com/supercell.com/images/posts/brawl-stars/aa2e1fca6b/1024x0/Header.webp", caption: "Мегакопилка заполнена на 100%" },
         { id: "g3", url: "https://cdn.supercell.com/supercell.com/images/posts/brawl-stars/1f66c14bb6/1024x0/Header.webp", caption: "Турнир 3х3 — Наша команда чемпионов" },
         { id: "g4", url: "https://cdn.supercell.com/supercell.com/images/posts/brawl-stars/b5ce4b9f33/1024x0/Header.webp", caption: "62 000 трофеев — Рекорд президента" }
+    ],
+    achievements: [
+        { id: "ach1", type: "fame", period: "hall-of-fame", players: "✨Cesuis✨, Zharik🔥, BiBr1k", value: "Мастер 3 Прайм" },
+        { id: "ach2", type: "ranked", period: "alltime", players: "farel", value: "Мастер Ранг (#1 Клуба)" },
+        { id: "ach3", type: "wins3v3", period: "week", players: "ęŗbąx❄️", value: "350 побед" },
+        { id: "ach4", type: "winsSd", period: "month", players: "⚔️| MAGIM |⚔️", value: "85 побед в ШД" },
+        { id: "ach5", type: "wins3v3", period: "year", players: "senyakrud", value: "4,500 побед" }
     ]
 };
 
@@ -132,6 +139,9 @@ function loadState() {
             }
             if (!clubData.gallery) {
                 clubData.gallery = deepClone(DEFAULT_CLUB_DATA.gallery);
+            }
+            if (!clubData.achievements) {
+                clubData.achievements = deepClone(DEFAULT_CLUB_DATA.achievements);
             }
         } else {
             clubData = deepClone(DEFAULT_CLUB_DATA);
@@ -464,6 +474,17 @@ function setupFilters() {
     if (sortSelect) {
         sortSelect.addEventListener("change", () => renderMembersList());
     }
+
+    // Вкладки в зале достижений
+    const achButtons = document.querySelectorAll(".ach-tab-btn");
+    achButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            achButtons.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentActiveAchTab = btn.getAttribute("data-ach-tab");
+            renderAchievements();
+        });
+    });
 }
 
 /**
@@ -766,6 +787,18 @@ function setupAdminForms() {
     const saveGalleryBtn = document.getElementById("saveGalleryBtn");
     if (saveGalleryBtn) {
         saveGalleryBtn.addEventListener("click", () => saveGalleryFromModal());
+    }
+
+    // ---- Достижения: добавление ----
+    const addAchievementBtn = document.getElementById("addAchievementBtn");
+    if (addAchievementBtn) {
+        addAchievementBtn.addEventListener("click", () => openAchievementModal());
+    }
+
+    // ---- Достижения: сохранение ----
+    const saveAchievementBtn = document.getElementById("saveAchievementBtn");
+    if (saveAchievementBtn) {
+        saveAchievementBtn.addEventListener("click", () => saveAchievementFromModal());
     }
 
     // ---- Закрытие модалок по кнопкам-крестикам и оверлею ----
@@ -1262,6 +1295,116 @@ function openLightbox(itemId) {
     modal.style.display = "flex";
 }
 
+// ──────────────── ДОСТИЖЕНИЯ: CRUD ────────────────
+
+/**
+ * Открыть модалку достижений (добавление / редактирование)
+ * @param {string|null} achId
+ */
+function openAchievementModal(achId = null) {
+    const modal = document.getElementById("achievementModal");
+    const typeSelect = document.getElementById("achType");
+    const periodSelect = document.getElementById("achPeriod");
+    const playersInput = document.getElementById("achPlayers");
+    const valueInput = document.getElementById("achValue");
+    const idInput = document.getElementById("achievementEditId");
+    const modalTitle = document.getElementById("achievementModalTitle");
+
+    if (!modal) return;
+
+    if (achId) {
+        const ach = clubData.achievements.find((a) => a.id === achId);
+        if (!ach) return;
+        if (modalTitle) modalTitle.textContent = "Редактировать достижение";
+        if (typeSelect) typeSelect.value = ach.type;
+        if (periodSelect) periodSelect.value = ach.period;
+        if (playersInput) playersInput.value = ach.players;
+        if (valueInput) valueInput.value = ach.value;
+        if (idInput) idInput.value = ach.id;
+    } else {
+        if (modalTitle) modalTitle.textContent = "Добавить достижение";
+        if (typeSelect) typeSelect.selectedIndex = 0;
+        if (periodSelect) periodSelect.selectedIndex = 0;
+        if (playersInput) playersInput.value = "";
+        if (valueInput) playersInput.value = "";
+        if (valueInput) valueInput.value = "";
+        if (idInput) idInput.value = "";
+    }
+
+    modal.style.display = "flex";
+}
+
+/**
+ * Сохранить достижение из модалки
+ */
+function saveAchievementFromModal() {
+    const typeSelect = document.getElementById("achType");
+    const periodSelect = document.getElementById("achPeriod");
+    const playersInput = document.getElementById("achPlayers");
+    const valueInput = document.getElementById("achValue");
+    const idInput = document.getElementById("achievementEditId");
+
+    const type = typeSelect ? typeSelect.value : "wins3v3";
+    const period = periodSelect ? periodSelect.value : "week";
+    const players = playersInput ? playersInput.value.trim() : "";
+    const value = valueInput ? valueInput.value.trim() : "";
+    const editId = idInput ? idInput.value : "";
+
+    if (!players) {
+        showToast("Укажите никнеймы игроков!", "error");
+        return;
+    }
+    if (!value) {
+        showToast("Укажите значение/рекорд!", "error");
+        return;
+    }
+
+    if (!clubData.achievements) {
+        clubData.achievements = [];
+    }
+
+    if (editId) {
+        const idx = clubData.achievements.findIndex((a) => a.id === editId);
+        if (idx !== -1) {
+            clubData.achievements[idx].type = type;
+            clubData.achievements[idx].period = period;
+            clubData.achievements[idx].players = players;
+            clubData.achievements[idx].value = value;
+        }
+        showToast("Достижение успешно обновлено!", "success");
+    } else {
+        clubData.achievements.push({
+            id: "ach" + generateId(),
+            type: type,
+            period: period,
+            players: players,
+            value: value
+        });
+        showToast("Достижение добавлено в зал!", "success");
+    }
+
+    saveState();
+    renderUI();
+
+    const modal = document.getElementById("achievementModal");
+    if (modal) modal.style.display = "none";
+}
+
+/**
+ * Удалить достижение (с подтверждением)
+ * @param {string} achId
+ */
+async function deleteAchievement(achId) {
+    const confirmed = await showConfirm("Удалить это достижение?");
+    if (!confirmed) return;
+
+    clubData.achievements = clubData.achievements.filter((a) => a.id !== achId);
+    saveState();
+    renderUI();
+    showToast("Достижение удалено из зала", "info");
+}
+
+
 
 // ============================================================
 // 13. ФУНКЦИИ РЕНДЕРИНГА
@@ -1276,6 +1419,7 @@ function renderUI() {
     renderEvents();
     renderMembersList();
     renderGallery();
+    renderAchievements();
 
     // Обновляем данные на странице вступления
     renderJoinPage();
@@ -1425,6 +1569,54 @@ function renderMembersList() {
     `).join("");
 }
 
+/** Текущая активная вкладка достижений */
+let currentActiveAchTab = "hall-of-fame";
+
+/**
+ * Рендеринг карточек достижений по выбранному периоду
+ */
+function renderAchievements() {
+    const container = document.getElementById("achievementsList");
+    if (!container) return;
+
+    const achievements = clubData.achievements || [];
+    // Фильтруем по периоду
+    const filtered = achievements.filter((ach) => ach.period === currentActiveAchTab);
+
+    if (!filtered.length) {
+        container.innerHTML = '<p class="empty-message" style="grid-column: span 3; text-align: center; padding: 3rem 0;">В этой категории пока нет достижений 🏆</p>';
+        return;
+    }
+
+    container.innerHTML = filtered.map((ach, index) => {
+        // Выбираем значок в зависимости от типа
+        let icon = "⚔️";
+        if (ach.type === "winsSd") icon = "☠️";
+        if (ach.type === "ranked") icon = "🏆";
+        if (ach.type === "fame") icon = "🌟";
+
+        return `
+            <div class="achievement-card reveal" style="animation-delay: ${index * 0.05}s;">
+                <div class="ach-card-glow"></div>
+                <div class="ach-header">
+                    <span class="ach-icon-badge">${icon}</span>
+                    <span class="ach-type">${getAchievementTypeLabel(ach.type)}</span>
+                </div>
+                <div class="ach-body">
+                    <div class="ach-value">${escapeHtml(ach.value)}</div>
+                    <div class="ach-players">${escapeHtml(ach.players)}</div>
+                </div>
+                <div class="ach-footer">
+                    <span class="ach-period-badge">${getAchievementPeriodLabel(ach.period)}</span>
+                </div>
+            </div>
+        `;
+    }).join("");
+
+    // Повторно инициализируем появление для новых элементов
+    setupScrollReveal();
+}
+
 /**
  * Рендеринг галереи достижений на главной странице
  */
@@ -1481,6 +1673,7 @@ function renderAdminDashboard() {
     renderAdminMembersTable();
     renderAdminEventsTable();
     renderAdminGalleryTable();
+    renderAdminAchievementsTable();
     prefillSettingsForm();
 }
 
@@ -1637,6 +1830,56 @@ function renderAdminGalleryTable() {
             <td class="action-cell">
                 <button class="btn btn-sm btn-edit" onclick="window.editGalleryItem('${item.id}')">✏️</button>
                 <button class="btn btn-sm btn-delete" onclick="window.deleteGalleryItem('${item.id}')">🗑️</button>
+            </td>
+        </tr>
+    `).join("");
+}
+
+/** Helper mapping for achievements translations */
+function getAchievementTypeLabel(type) {
+    const map = {
+        "wins3v3": "⚔️ Победы 3 на 3",
+        "winsSd": "☠️ Победы ШД",
+        "ranked": "🏆 Ранкед рекорд",
+        "fame": "🌟 Зал славы"
+    };
+    return map[type] || type;
+}
+
+function getAchievementPeriodLabel(period) {
+    const map = {
+        "week": "📅 Неделя",
+        "month": "🗓️ Месяц",
+        "year": "⏳ Год",
+        "alltime": "♾️ Все время",
+        "hall-of-fame": "⭐ Зал славы"
+    };
+    return map[period] || period;
+}
+
+/**
+ * Таблица достижений в админке
+ */
+function renderAdminAchievementsTable() {
+    const tbody = document.getElementById("adminAchievementsBody");
+    if (!tbody) return;
+
+    const achievements = clubData.achievements || [];
+
+    if (!achievements.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-cell">Нет достижений</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = achievements.map((ach) => `
+        <tr>
+            <td>${getAchievementTypeLabel(ach.type)}</td>
+            <td>${getAchievementPeriodLabel(ach.period)}</td>
+            <td>${escapeHtml(ach.players)}</td>
+            <td>${escapeHtml(ach.value)}</td>
+            <td class="action-cell">
+                <button class="btn btn-sm btn-edit" onclick="window.editAchievement('${ach.id}')">✏️</button>
+                <button class="btn btn-sm btn-delete" onclick="window.deleteAchievement('${ach.id}')">🗑️</button>
             </td>
         </tr>
     `).join("");
@@ -1842,6 +2085,18 @@ window.editGalleryItem = function (id) {
 window.deleteGalleryItem = function (id) {
     if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
     deleteGalleryItem(id);
+};
+
+/** Редактирование достижения */
+window.editAchievement = function (id) {
+    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
+    openAchievementModal(id);
+};
+
+/** Удаление достижения */
+window.deleteAchievement = function (id) {
+    if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
+    deleteAchievement(id);
 };
 
 /** Открыть lightbox */

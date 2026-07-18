@@ -27,6 +27,7 @@
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="#" class="nav-link active" data-tab="club">Клуб</a></li>
                     <li><a href="#" class="nav-link" data-tab="members">Участники</a></li>
+                    <li><a href="#" class="nav-link" data-tab="achievements">Зал достижений</a></li>
                     <li><a href="#" class="nav-link" data-tab="events">События</a></li>
                     <li><a href="#" class="nav-link" data-tab="rules">Правила</a></li>
                     <li><a href="#" class="nav-link" data-tab="join">Вступить</a></li>
@@ -193,6 +194,25 @@
                     <h3>Участник</h3>
                     <p>Начальная роль. Играйте активно, помогайте клубу и растите до ветерана!</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- ======================== ЗАЛ ДОСТИЖЕНИЙ ======================== -->
+        <section id="achievements-section" class="content-section tab-content">
+            <div class="section-header-flex">
+                <h2>🏆 Зал достижений</h2>
+                <div class="filter-controls ach-tab-controls">
+                    <button class="btn btn-sm btn-secondary ach-tab-btn active" data-ach-tab="hall-of-fame">⭐ Зал славы</button>
+                    <button class="btn btn-sm btn-secondary ach-tab-btn" data-ach-tab="week">📅 За неделю</button>
+                    <button class="btn btn-sm btn-secondary ach-tab-btn" data-ach-tab="month">🗓️ За месяц</button>
+                    <button class="btn btn-sm btn-secondary ach-tab-btn" data-ach-tab="year">⏳ За год</button>
+                    <button class="btn btn-sm btn-secondary ach-tab-btn" data-ach-tab="alltime">♾️ За все время</button>
+                </div>
+            </div>
+
+            <!-- Контейнер для достижений -->
+            <div class="achievements-container" id="achievementsList">
+                <!-- Рендерится из JS -->
             </div>
         </section>
 
@@ -382,6 +402,30 @@
                             </div>
                         </div>
 
+                        <!-- Управление залом достижений -->
+                        <div class="admin-subcard col-span-2">
+                            <div class="subcard-header-flex">
+                                <h3>🏆 Достижения клуба</h3>
+                                <button class="btn btn-sm btn-primary" id="addAchievementBtn">+ Добавить достижение</button>
+                            </div>
+                            <div class="admin-table-wrapper">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Тип</th>
+                                            <th>Период</th>
+                                            <th>Игрок(и)</th>
+                                            <th>Значение/Рекорд</th>
+                                            <th>Действия</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="adminAchievementsBody">
+                                        <!-- Рендерится из JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -529,6 +573,45 @@
                 <input type="text" id="galleryCaption" placeholder="Напр.: Победа в Клубной Лиге">
             </div>
             <button class="btn btn-primary btn-full" id="saveGalleryBtn">💾 Сохранить</button>
+        </div>
+    </div>
+
+    <!-- Модалка достижений -->
+    <div class="modal" id="achievementModal">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h3 class="modal-header" id="achievementModalTitle">Добавить достижение</h3>
+            <input type="hidden" id="achievementEditId">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="achType">Тип достижения</label>
+                    <select id="achType">
+                        <option value="wins3v3">⚔️ Победы 3 на 3</option>
+                        <option value="winsSd">☠️ Победы в ШД (Соло/Дуо)</option>
+                        <option value="ranked">🏆 Ранкед рекорд (Мастер/Легенда)</option>
+                        <option value="fame">🌟 Зал славы (Прайм, про-ранг и др.)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="achPeriod">Период</label>
+                    <select id="achPeriod">
+                        <option value="week">📅 Неделя</option>
+                        <option value="month">🗓️ Месяц</option>
+                        <option value="year">⏳ Год</option>
+                        <option value="alltime">♾️ Все время</option>
+                        <option value="hall-of-fame">⭐ Зал славы (всегда)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="achPlayers">Ник(и) игрока(ов)</label>
+                <input type="text" id="achPlayers" placeholder="Напр.: ✨Cesuis✨, Zharik🔥">
+            </div>
+            <div class="form-group">
+                <label for="achValue">Значение / Рекорд / Ранг</label>
+                <input type="text" id="achValue" placeholder="Напр.: 15,200 побед или Мастер 3 Прайм">
+            </div>
+            <button class="btn btn-primary btn-full" id="saveAchievementBtn">💾 Сохранить</button>
         </div>
     </div>
 
