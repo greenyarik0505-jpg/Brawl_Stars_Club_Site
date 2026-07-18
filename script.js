@@ -267,37 +267,37 @@ function showToast(message, type = "info") {
  */
 function showConfirm(message) {
     return new Promise((resolve) => {
-        // Оверлей
-        const overlay = document.createElement("div");
-        overlay.className = "modal confirm-modal";
-        overlay.style.display = "flex";
+        const modal = document.getElementById("confirmModal");
+        const msgEl = document.getElementById("confirmMessage");
+        const yesBtn = document.getElementById("confirmYes");
+        const noBtn = document.getElementById("confirmNo");
 
-        // Контент диалога
-        overlay.innerHTML = `
-            <div class="modal-content confirm-modal-content">
-                <p class="confirm-message">${escapeHtml(message)}</p>
-                <div class="confirm-buttons">
-                    <button class="btn btn-primary confirm-yes">Подтвердить</button>
-                    <button class="btn btn-secondary confirm-no">Отмена</button>
-                </div>
-            </div>
-        `;
+        if (!modal || !msgEl || !yesBtn || !noBtn) {
+            // Фолбэк, если HTML не найден
+            resolve(confirm(message));
+            return;
+        }
 
-        document.body.appendChild(overlay);
+        msgEl.textContent = message;
+        modal.style.display = "flex";
 
-        // Обработчики
         const cleanup = (result) => {
-            overlay.remove();
+            modal.style.display = "none";
+            yesBtn.removeEventListener("click", onYes);
+            noBtn.removeEventListener("click", onNo);
+            modal.removeEventListener("click", onBgClick);
             resolve(result);
         };
 
-        overlay.querySelector(".confirm-yes").addEventListener("click", () => cleanup(true));
-        overlay.querySelector(".confirm-no").addEventListener("click", () => cleanup(false));
+        const onYes = () => cleanup(true);
+        const onNo = () => cleanup(false);
+        const onBgClick = (e) => {
+            if (e.target === modal) cleanup(false);
+        };
 
-        // Закрытие по клику на оверлей (вне контента)
-        overlay.addEventListener("click", (e) => {
-            if (e.target === overlay) cleanup(false);
-        });
+        yesBtn.addEventListener("click", onYes);
+        noBtn.addEventListener("click", onNo);
+        modal.addEventListener("click", onBgClick);
     });
 }
 
