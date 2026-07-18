@@ -790,8 +790,9 @@ async function attemptAdminLogin() {
         return;
     }
 
-    // Для Firebase Auth нам нужен формат email
-    const email = username + "@brawl.com";
+    // Если пользователь ввел email целиком (с @), используем его. 
+    // Иначе добавляем @brawl.com для удобства ввода короткого логина.
+    const email = username.includes("@") ? username : username + "@brawl.com";
 
     try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
