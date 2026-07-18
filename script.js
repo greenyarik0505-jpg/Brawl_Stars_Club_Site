@@ -1,7 +1,7 @@
 // ============================================================
 // 🎮 Brawl Stars Club — Священная Империя | script.js
 // ============================================================
-const SITE_VERSION = "8";
+const SITE_VERSION = "9";
 console.log("%c🎮 Сайт загружен | Версия: " + SITE_VERSION, "color: #00e5ff; font-size: 16px; font-weight: bold;");
 // Полнофункциональный скрипт для клубного сайта.
 // Содержит: управление состоянием, навигацию, анимации,
@@ -461,37 +461,38 @@ function animateCounter(element, target, duration = 1500) {
 //  7. SCROLL REVEAL АНИМАЦИИ
 // ============================================================
 
+let globalRevealObserver = null;
+
 /**
  * Настройка IntersectionObserver для анимаций появления
  */
 function setupScrollReveal() {
     const revealElements = document.querySelectorAll(".reveal");
-
     if (!revealElements.length) return;
 
-    // Сразу активируем элементы, которые уже находятся на экране, чтобы избежать "застревания"
-    revealElements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            el.classList.add("reveal-active");
-        }
-    });
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("reveal-active");
-                    observer.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.05 } // Снизили порог для более надежного срабатывания
-    );
+    if (!globalRevealObserver) {
+        globalRevealObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("reveal-active");
+                        globalRevealObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.05 }
+        );
+    }
 
     revealElements.forEach((el) => {
-        if (!el.classList.contains("reveal-active")) {
-            observer.observe(el);
+        if (el.classList.contains("reveal-active")) return;
+        
+        const rect = el.getBoundingClientRect();
+        // Если элемент уже на экране, сразу показываем
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add("reveal-active");
+        } else {
+            globalRevealObserver.observe(el);
         }
     });
 }
@@ -1664,6 +1665,8 @@ function renderMembersList() {
             </div>
         </div>
     `).join("");
+
+    setupScrollReveal();
 }
 
 /** Текущая активная вкладка достижений */
