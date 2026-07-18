@@ -5,17 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Brawl Stars: Священная Империя - Презентация</title>
 
-    <!-- Reveal.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&family=Russo+One&display=swap" rel="stylesheet">
 
-    <!-- Custom Premium Styles -->
     <style>
         :root {
             --primary-gold: #FFD700;
@@ -28,13 +22,11 @@
             background: var(--dark-bg);
             background-color: var(--dark-bg) !important;
             font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
         }
 
-        /* Pure black background for all slides */
         .reveal .slides section {
             background-color: transparent !important;
-            text-align: left; /* Better for a lot of text */
+            text-align: left;
         }
         
         .reveal .slides section.center-slide {
@@ -42,263 +34,213 @@
         }
 
         #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            pointer-events: none;
+            position: absolute; width: 100%; height: 100%;
+            top: 0; left: 0; z-index: 0; pointer-events: none;
         }
-
         .reveal { z-index: 1; }
 
-        /* Typography */
+        /* Normal Typography for standard scaling */
         .reveal h1, .reveal h2, .reveal h3 {
             font-family: 'Russo One', sans-serif;
             text-transform: uppercase;
             color: #fff;
-            text-shadow: 0 10px 30px rgba(0,0,0,1);
+            text-shadow: 0 5px 15px rgba(0,0,0,1);
             margin-bottom: 20px;
         }
-
-        .reveal h1 { font-size: 4em; letter-spacing: 5px; }
-        .reveal h2 { font-size: 2.5em; color: var(--primary-gold); }
-        .reveal h3 { font-size: 1.8em; color: var(--primary-blue); margin-bottom: 15px; }
+        .reveal h1 { font-size: 3em; letter-spacing: 2px; }
+        .reveal h2 { font-size: 2em; color: var(--primary-gold); }
+        .reveal h3 { font-size: 1.5em; color: var(--primary-blue); margin-bottom: 15px; }
         
         .reveal p, .reveal li {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 600; /* Bold text for visibility */
-            font-size: 1.6em; /* Increased size */
-            color: #FFFFFF; /* Pure white for max contrast */
-            line-height: 1.6;
+            font-weight: 400;
+            font-size: 1em; /* Normal size, Reveal will scale it */
+            color: #E2E8F0;
+            line-height: 1.5;
         }
 
         .text-gold { color: var(--primary-gold) !important; }
         .text-blue { color: var(--primary-blue) !important; }
         .text-red { color: var(--accent-red) !important; }
-        
-        .glow-text {
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.3);
-        }
 
-        /* Cards */
         .glass-card {
             background: rgba(20, 20, 20, 0.8);
             border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            transition: transform 0.3s;
-            margin-bottom: 20px;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+            margin-bottom: 15px;
         }
 
-        .glass-card:hover {
-            transform: scale(1.02);
-            border-color: var(--primary-gold);
-        }
-
-        /* Grids */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         
         .feature-icon {
-            font-size: 3rem;
+            font-size: 2rem;
             color: var(--primary-blue);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: block;
         }
 
-        /* Iframes */
         .browser-mockup {
-            border-radius: 20px;
-            border: 4px solid #333;
+            border-radius: 15px;
+            border: 2px solid #333;
             background: #000;
             width: 100%;
-            height: 500px;
+            height: 400px;
             display: flex;
             flex-direction: column;
         }
         .browser-mockup iframe { flex-grow: 1; border: none; }
 
         .phone-mockup {
-            width: 300px;
-            height: 600px;
-            border-radius: 50px;
-            border: 16px solid #222;
+            width: 250px;
+            height: 500px;
+            border-radius: 30px;
+            border: 10px solid #222;
             background: #000;
             margin: 0 auto;
             position: relative;
         }
-        .phone-mockup iframe { width: 100%; height: 100%; border-radius: 34px; border: none; }
+        .phone-mockup iframe { width: 100%; height: 100%; border-radius: 20px; border: none; }
 
-        /* Animations */
+        .floating { animation: float 6s ease-in-out infinite; }
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
-        .floating { animation: float 6s ease-in-out infinite; }
 
-        /* Mobile Adaptations for 1080p Canvas */
-        @media (max-width: 1080px) {
-            .grid-2 { grid-template-columns: 1fr; gap: 40px; }
-            .browser-mockup { height: 700px; border-width: 6px; }
-            .phone-mockup { width: 500px; height: 1000px; border-width: 16px; margin-top: 40px; }
-            .feature-icon { font-size: 6rem; }
-            .glass-card { padding: 40px; margin-bottom: 30px; }
-            
-            /* Make text even bigger for mobile readability */
-            .reveal h1 { font-size: 6em; }
-            .reveal h2 { font-size: 4.5em; }
-            .reveal h3 { font-size: 2.5em; }
-            .reveal p, .reveal li { font-size: 2em; line-height: 1.5; }
+        /* Standard Mobile Media Query */
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 10px; }
+            .reveal h1 { font-size: 2em; }
+            .reveal h2 { font-size: 1.5em; }
+            .reveal p, .reveal li { font-size: 0.9em; }
+            .phone-mockup { width: 200px; height: 400px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- Minimal Particles for Black BG -->
     <div id="particles-js"></div>
-
     <div class="reveal">
         <div class="slides">
 
-            <!-- SLIDE 1: EPIC INTRO -->
+            <!-- 1 -->
             <section class="center-slide">
                 <div class="floating" style="margin-bottom: 20px;">
-                    <div style="font-size: 8rem; text-shadow: 0 0 40px #FFD700;">👑</div>
+                    <div style="font-size: 5rem; text-shadow: 0 0 30px #FFD700;">👑</div>
                 </div>
-                <h1 class="glow-text">Священная Империя</h1>
-                <p style="color: var(--primary-blue); font-weight: 900; letter-spacing: 5px; font-size: 1.5em; text-align: center;">ОФИЦИАЛЬНЫЙ САЙТ КЛУБА В BRAWL STARS</p>
-                <p style="text-align: center; color: #888; font-size: 0.9em; margin-top: 50px;">Кликните или свайпните для перехода к следующему слайду</p>
+                <h1>Священная Империя</h1>
+                <p style="color: var(--primary-blue); font-weight: 900; letter-spacing: 2px;">ОФИЦИАЛЬНЫЙ САЙТ КЛУБА В BRAWL STARS</p>
+                <p style="text-align: center; color: #888; font-size: 0.8em; margin-top: 30px;">Используйте стрелки для переключения</p>
             </section>
 
-            <!-- SLIDE 2: DETAILED WHY -->
+            <!-- 2 -->
             <section>
-                <h2>Зачем нам нужен <span class="text-gold">свой сайт?</span></h2>
-                <div class="glass-card fragment fade-up">
-                    <p>В мире киберспорта и соревновательного Brawl Stars одного общения в мессенджерах уже недостаточно. Telegram-чаты и внутриигровые переписки постоянно забиваются спамом, важные сообщения теряются, а новые участники не могут найти правила клуба.</p>
+                <h2>Зачем нам <span class="text-gold">сайт?</span></h2>
+                <div class="glass-card">
+                    <p>Telegram-чаты и игровые переписки забиваются спамом, важные сообщения теряются, а новые участники не могут найти правила.</p>
                 </div>
-                <div class="glass-card fragment fade-up">
-                    <p><b>Сайт решает эти проблемы комплексно:</b></p>
-                    <ul style="margin-left: 40px;">
-                        <li><span class="text-blue">Статус и Престиж:</span> Наличие собственного премиального сайта сразу выделяет нас среди десятков тысяч других клубов. Мы позиционируем себя как серьезную организацию.</li>
-                        <li><span class="text-blue">Единая База Знаний:</span> Все новости, анонсы турниров, правила и требования к игрокам всегда доступны по одной ссылке 24/7. Никаких потерянных закрепов.</li>
-                        <li><span class="text-blue">Мотивация Игроков:</span> Когда результаты твоих стараний (достижения, кубки) публикуются на официальном сайте в Зале Славы — это дает мощнейший заряд мотивации играть лучше.</li>
+                <div class="glass-card">
+                    <ul style="margin-left: 20px;">
+                        <li><span class="text-blue">Престиж:</span> Свой сайт выделяет нас среди десятков тысяч других клубов.</li>
+                        <li><span class="text-blue">Единая База:</span> Все новости, анонсы турниров и правила всегда доступны по одной ссылке.</li>
+                        <li><span class="text-blue">Мотивация:</span> Достижения и кубки публикуются в Зале Славы.</li>
                     </ul>
                 </div>
             </section>
 
-            <!-- SLIDE 3: HUGE TEXT FEATURES -->
+            <!-- 3 -->
             <section>
-                <h2>Функционал: <span class="text-gold">Всё в одном месте</span></h2>
+                <h2>Функционал <span class="text-gold">Часть 1</span></h2>
                 <div class="grid-2">
-                    <div class="glass-card fragment fade-up">
+                    <div class="glass-card">
                         <h3><i class="fas fa-users text-gold"></i> База Участников</h3>
-                        <p>Интеллектуальный список всех игроков клуба. Поддерживает мгновенную сортировку по количеству кубков, а также фильтрацию по ролям (Президент, Вице-президент, Ветеран, Участник). Каждый всегда знает, на каком он месте в иерархии.</p>
+                        <p>Интеллектуальный список игроков. Мгновенная сортировка по кубкам и фильтрация по ролям (Президент, Ветеран). Каждый знает своё место в иерархии.</p>
                     </div>
-                    <div class="glass-card fragment fade-up">
+                    <div class="glass-card">
                         <h3><i class="fas fa-newspaper text-blue"></i> Новостная Лента</h3>
-                        <p>Полноценный блог клуба. Здесь публикуются итоги Лиги Клубов, важные объявления от руководства и изменения в правилах. Теперь никто не сможет сказать "А я не видел сообщение в чате".</p>
-                    </div>
-                    <div class="glass-card fragment fade-up">
-                        <h3><i class="fas fa-calendar-alt text-red"></i> Интерактивные События</h3>
-                        <p>Наглядный таймлайн предстоящих турниров, начала мегакопилки и дней чистки неактивных игроков. Игроки всегда могут зайти и проверить, когда им нужно быть в игре, чтобы не подвести команду.</p>
-                    </div>
-                    <div class="glass-card fragment fade-up">
-                        <h3><i class="fas fa-trophy" style="color: #b052ff;"></i> Зал Славы и Рекорды</h3>
-                        <p>Система достижений, разбитая на периоды (За неделю, За месяц, За всё время). Галерея скриншотов с лучшими моментами, легендарными победами и рекордами, которые вписаны в историю клуба навсегда.</p>
+                        <p>Полноценный блог клуба. Итоги Лиги Клубов, важные объявления от руководства и изменения в правилах. Всё сохраняется в истории.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- SLIDE 4: LIVE PREVIEW -->
+            <!-- 4 -->
+            <section>
+                <h2>Функционал <span class="text-gold">Часть 2</span></h2>
+                <div class="grid-2">
+                    <div class="glass-card">
+                        <h3><i class="fas fa-calendar-alt text-red"></i> События</h3>
+                        <p>Таймлайн предстоящих турниров, начала мегакопилки и дней чистки неактивных игроков.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3><i class="fas fa-trophy" style="color: #b052ff;"></i> Рекорды</h3>
+                        <p>Галерея с лучшими моментами, легендарными победами и рекордами, которые вписаны в историю клуба.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5 -->
             <section class="center-slide">
-                <h2><i class="fas fa-desktop"></i> ПК Версия (Интерактив)</h2>
-                <p style="text-align: center; margin-bottom: 20px;">Это настоящий рабочий сайт. Вы можете скроллить и кликать прямо здесь!</p>
-                <div class="browser-mockup fragment zoom-in">
+                <h2><i class="fas fa-desktop"></i> ПК Версия</h2>
+                <p>Вы можете скроллить и кликать прямо здесь!</p>
+                <div class="browser-mockup">
                     <iframe data-src="index.html"></iframe>
                 </div>
             </section>
 
-            <!-- SLIDE 5: MOBILE PREVIEW -->
+            <!-- 6 -->
             <section>
-                <div class="grid-2" style="align-items: center; height: 100%;">
+                <div class="grid-2" style="align-items: center;">
                     <div>
                         <h2><i class="fas fa-mobile-alt text-blue"></i> Mobile First</h2>
-                        <p>По статистике, более 95% игроков в Brawl Stars используют исключительно мобильные устройства. Мы учли этот фактор с самого начала разработки.</p>
-                        <br>
                         <ul style="margin-left: 20px;">
-                            <li class="fragment fade-up"><b>Идеальная адаптация:</b> Сайт автоматически подстраивается под любой размер экрана — от старых iPhone до современных огромных Android-смартфонов.</li>
-                            <li class="fragment fade-up"><b>Удобство пальцев:</b> Все кнопки и кликабельные элементы сделаны достаточно крупными (минимум 44 пикселя), чтобы по ним было легко попасть.</li>
-                            <li class="fragment fade-up"><b>Быстродействие:</b> Убрана задержка тапа в 300мс, интерфейс реагирует на касания моментально, как нативное мобильное приложение.</li>
+                            <li><b>Идеальная адаптация:</b> Сайт подстраивается под любой экран.</li>
+                            <li><b>Удобство:</b> Все кнопки крупные, легко нажимать пальцем.</li>
+                            <li><b>Скорость:</b> Убрана задержка тапа, работает как приложение.</li>
                         </ul>
                     </div>
-                    <div class="phone-mockup floating fragment slide-up">
+                    <div class="phone-mockup floating">
                         <iframe data-src="index.html"></iframe>
                     </div>
                 </div>
             </section>
 
-            <!-- SLIDE 6: ADMIN PANEL EXPLAINED -->
+            <!-- 7 -->
             <section>
-                <h2>Админ-<span class="text-red">Панель</span> и Управление</h2>
+                <h2>Админ-<span class="text-red">Панель</span></h2>
                 <div class="glass-card">
-                    <p>Самое главное достижение этого сайта — им может управлять абсолютно любой человек, не зная ни единой строчки кода. Вам не нужен программист, чтобы добавить новость или обновить список участников.</p>
+                    <p>Самое главное — сайтом может управлять любой человек, не зная кода.</p>
                 </div>
-                
                 <div class="grid-2">
-                    <div class="fragment fade-up">
-                        <h3 class="text-blue"><i class="fas fa-lock"></i> Максимальная защита</h3>
-                        <p>Доступ к редактированию закрыт надежной системой авторизации. Только владелец клуба или доверенные лица, знающие секретный пароль, могут вносить изменения.</p>
+                    <div>
+                        <h3 class="text-blue"><i class="fas fa-lock"></i> Защита</h3>
+                        <p>Доступ к редактированию только по паролю для руководства.</p>
                     </div>
-                    <div class="fragment fade-up">
-                        <h3 class="text-gold"><i class="fas fa-bolt"></i> Мгновенные изменения</h3>
-                        <p>Все обновления происходят в реальном времени. Если вы добавляете новую фотографию в галерею или удаляете новость, все посетители сайта увидят эти изменения мгновенно, без перезагрузки.</p>
+                    <div>
+                        <h3 class="text-gold"><i class="fas fa-bolt"></i> Онлайн</h3>
+                        <p>Все обновления (новости, участники) мгновенно сохраняются в облако Firebase.</p>
                     </div>
-                </div>
-                
-                <div class="glass-card fragment fade-up" style="margin-top: 20px;">
-                    <p><b>Всё делается прямо на сайте:</b> после ввода пароля на странице появляются удобные кнопки ✏️ (Редактировать) и 🗑️ (Удалить) возле каждого элемента. Нажали, изменили текст в красивом окошке, сохранили — готово.</p>
                 </div>
             </section>
 
-            <!-- SLIDE 7: TECH STACK DETAILED -->
-            <section>
-                <h2><i class="fas fa-microchip text-gold"></i> Технологии под капотом</h2>
-                <p>Для создания сайта были использованы только современные и надежные технологии, обеспечивающие бесперебойную работу 24/7 под любыми нагрузками.</p>
-                
-                <ul style="margin-top: 30px; margin-left: 40px; line-height: 2;">
-                    <li class="fragment fade-up"><span class="text-blue" style="font-weight: 900;">Google Firebase (Realtime Database):</span> Облачная база данных от Google корпоративного уровня. Ваши данные надежно защищены от потери и загружаются за миллисекунды.</li>
-                    <li class="fragment fade-up"><span class="text-blue" style="font-weight: 900;">GitHub Pages:</span> Самый быстрый и надежный в мире хостинг для статических сайтов. Гарантирует, что сайт никогда не "упадёт" даже при наплыве тысяч посетителей.</li>
-                    <li class="fragment fade-up"><span class="text-blue" style="font-weight: 900;">Vanilla JS & Glassmorphism:</span> Никаких тяжелых фреймворков. Чистый, оптимизированный код и современный дизайн с эффектом матового стекла, который используется в интерфейсах Apple и Windows 11.</li>
-                </ul>
-            </section>
-
-            <!-- SLIDE 8: END -->
+            <!-- 8 -->
             <section class="center-slide">
-                <div class="brawl-icon floating" style="font-size: 6rem; text-align: center;">👑</div>
-                <h1 class="text-gold" style="font-size: 4em; text-align: center;">САЙТ ПОЛНОСТЬЮ ГОТОВ</h1>
-                <p style="font-size: 1.5em; margin-bottom: 40px; text-align: center;">Вы можете начать приглашать участников!</p>
-                
-                <div style="text-align: center;">
-                    <a href="index.html" class="fragment zoom-in" style="display: inline-block; background: var(--primary-gold); color: #000; padding: 25px 60px; text-decoration: none; border-radius: 60px; font-weight: 900; font-size: 2em; box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);">
-                        ПЕРЕЙТИ НА САЙТ
-                    </a>
-                </div>
+                <div class="brawl-icon floating" style="font-size: 5rem;">👑</div>
+                <h1 class="text-gold" style="font-size: 3em;">САЙТ ГОТОВ</h1>
+                <p style="font-size: 1.2em; margin-bottom: 30px;">Можно приглашать участников!</p>
+                <a href="index.html" style="display: inline-block; background: var(--primary-gold); color: #000; padding: 15px 40px; text-decoration: none; border-radius: 50px; font-weight: 900; font-size: 1.5em;">
+                    ПЕРЕЙТИ НА САЙТ
+                </a>
             </section>
 
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <script>
-        // Определяем размеры в зависимости от устройства
-        const isMobile = window.innerWidth < 900;
-
         Reveal.initialize({
             hash: true,
             controls: true,
@@ -306,35 +248,30 @@
             center: true,
             transition: 'slide', 
             backgroundTransition: 'fade',
-            width: isMobile ? 1080 : 1400, // Вертикальный холст 1080p для телефонов!
-            height: isMobile ? 1920 : 1000, // Высота 1920p (9:16)
-            margin: isMobile ? 0.05 : 0.04,
-            minScale: 0.1,
-            maxScale: 3.0
+            width: 960,  // Стандартная ширина
+            height: 700, // Стандартная высота
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0
         });
 
-        // Клик по экрану (но не по iframe) переключает на следующий слайд
         document.body.addEventListener('click', function(e) {
             if (e.target.tagName !== 'IFRAME' && !e.target.closest('.controls')) {
                 Reveal.next();
             }
         });
 
-        // Golden particles
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 50 },
+                "number": { "value": 40 },
                 "color": { "value": ["#FFD700", "#ffffff"] },
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.3, "random": true },
-                "size": { "value": 4, "random": true },
+                "size": { "value": 3, "random": true },
                 "line_linked": { "enable": false },
                 "move": { "enable": true, "speed": 1, "direction": "top", "out_mode": "out" }
             },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": { "onhover": { "enable": false }, "onclick": { "enable": true, "mode": "push" } }
-            },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": true, "mode": "push" } } },
             "retina_detect": true
         });
     </script>
