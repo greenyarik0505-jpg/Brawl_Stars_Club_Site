@@ -1863,8 +1863,8 @@ function renderAdminNewsTable() {
             <td>${escapeHtml(n.title)}</td>
             <td>${escapeHtml(n.date)}</td>
             <td class="action-cell">
-                <button class="btn btn-sm btn-edit" onclick="window.editNews('${n.id}')">✏️</button>
-                <button class="btn btn-sm btn-delete" onclick="window.deleteNews('${n.id}')">🗑️</button>
+                <button class="btn btn-sm btn-edit" data-action="editNews" data-id="${n.id}">✏️</button>
+                <button class="btn btn-sm btn-delete" data-action="deleteNews" data-id="${n.id}">🗑️</button>
             </td>
         </tr>
     `).join("");
@@ -1889,8 +1889,8 @@ function renderAdminMembersTable() {
             <td><span class="role-badge ${getRoleBadgeClass(m.role)}">${escapeHtml(m.role)}</span></td>
             <td>${m.trophies.toLocaleString("ru-RU")}</td>
             <td class="action-cell">
-                <button class="btn btn-sm btn-edit" onclick="window.editMember('${m.id}')">✏️</button>
-                <button class="btn btn-sm btn-delete" onclick="window.deleteMember('${m.id}')">🗑️</button>
+                <button class="btn btn-sm btn-edit" data-action="editMember" data-id="${m.id}">✏️</button>
+                <button class="btn btn-sm btn-delete" data-action="deleteMember" data-id="${m.id}">🗑️</button>
             </td>
         </tr>
     `).join("");
@@ -1914,8 +1914,8 @@ function renderAdminEventsTable() {
             <td>${escapeHtml(ev.title)}</td>
             <td>${getEventTypeIcon(ev.type)} ${getEventTypeLabel(ev.type)}</td>
             <td class="action-cell">
-                <button class="btn btn-sm btn-edit" onclick="window.editEvent('${ev.id}')">✏️</button>
-                <button class="btn btn-sm btn-delete" onclick="window.deleteEvent('${ev.id}')">🗑️</button>
+                <button class="btn btn-sm btn-edit" data-action="editEvent" data-id="${ev.id}">✏️</button>
+                <button class="btn btn-sm btn-delete" data-action="deleteEvent" data-id="${ev.id}">🗑️</button>
             </td>
         </tr>
     `).join("");
@@ -1941,8 +1941,8 @@ function renderAdminGalleryTable() {
                      onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 60%22><rect fill=%22%231a1f35%22 width=%2280%22 height=%2260%22/><text x=%2250%%22 y=%2250%%22 fill=%22%237f8ab5%22 font-size=%2220%22 text-anchor=%22middle%22 dominant-baseline=%22central%22>🖼️</text></svg>'"></td>
             <td>${escapeHtml(item.caption)}</td>
             <td class="action-cell">
-                <button class="btn btn-sm btn-edit" onclick="window.editGalleryItem('${item.id}')">✏️</button>
-                <button class="btn btn-sm btn-delete" onclick="window.deleteGalleryItem('${item.id}')">🗑️</button>
+                <button class="btn btn-sm btn-edit" data-action="editGalleryItem" data-id="${item.id}">✏️</button>
+                <button class="btn btn-sm btn-delete" data-action="deleteGalleryItem" data-id="${item.id}">🗑️</button>
             </td>
         </tr>
     `).join("");
@@ -1991,8 +1991,8 @@ function renderAdminAchievementsTable() {
             <td>${escapeHtml(ach.players)}</td>
             <td>${escapeHtml(ach.value)}</td>
             <td class="action-cell">
-                <button class="btn btn-sm btn-edit" onclick="window.editAchievement('${ach.id}')">✏️</button>
-                <button class="btn btn-sm btn-delete" onclick="window.deleteAchievement('${ach.id}')">🗑️</button>
+                <button class="btn btn-sm btn-edit" data-action="editAchievement" data-id="${ach.id}">✏️</button>
+                <button class="btn btn-sm btn-delete" data-action="deleteAchievement" data-id="${ach.id}">🗑️</button>
             </td>
         </tr>
     `).join("");
@@ -2211,6 +2211,49 @@ window.deleteAchievement = function (id) {
     if (!isAdminAuthenticated) { showToast("Доступ запрещен!", "error"); return; }
     deleteAchievement(id);
 };
+
+/**
+ * Event delegation for admin table buttons (fixes mobile tap issues).
+ * Mobile browsers sometimes do not fire onclick on dynamically rendered
+ * button elements inside scrollable table wrappers. Using event delegation
+ * on the document with both "click" and "touchend" solves this.
+ */
+(function setupAdminButtonDelegation() {
+    function handleAdminAction(e) {
+        const btn = e.target.closest("button[data-action]");
+        if (!btn) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const action = btn.getAttribute("data-action");
+        const id = btn.getAttribute("data-id");
+        if (!action || !id) return;
+
+        switch (action) {
+            case "editNews": window.editNews(id); break;
+            case "deleteNews": window.deleteNews(id); break;
+            case "editMember": window.editMember(id); break;
+            case "deleteMember": window.deleteMember(id); break;
+            case "editEvent": window.editEvent(id); break;
+            case "deleteEvent": window.deleteEvent(id); break;
+            case "editGalleryItem": window.editGalleryItem(id); break;
+            case "deleteGalleryItem": window.deleteGalleryItem(id); break;
+            case "editAchievement": window.editAchievement(id); break;
+            case "deleteAchievement": window.deleteAchievement(id); break;
+        }
+    }
+
+    document.addEventListener("click", handleAdminAction);
+    // touchend for mobile — fires even when onclick is swallowed
+    document.addEventListener("touchend", function(e) {
+        const btn = e.target.closest("button[data-action]");
+        if (!btn) return;
+        // Prevent the subsequent click from firing a duplicate
+        e.preventDefault();
+        handleAdminAction(e);
+    }, { passive: false });
+})();
 
 /** Открыть lightbox */
 window.openLightbox = function (id) {
