@@ -1684,8 +1684,8 @@ ul, ol { list-style: none; }
   position: absolute;
   top: var(--space-md);
   right: var(--space-md);
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1696,6 +1696,11 @@ ul, ol { list-style: none; }
   color: var(--text-muted);
   cursor: pointer;
   transition: background var(--transition-fast), color var(--transition-fast);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(255, 71, 87, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 10;
 }
 
 .modal-close:hover {
