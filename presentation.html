@@ -162,8 +162,8 @@
 
             <!-- SLIDE 1: EPIC INTRO -->
             <section class="center-slide">
-                <div class="floating" style="margin-bottom: 40px;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/871/871374.png" width="150" style="filter: drop-shadow(0 0 30px #FFD700); margin: 0 auto; display: block;" alt="Sword">
+                <div class="floating" style="margin-bottom: 20px;">
+                    <div style="font-size: 8rem; text-shadow: 0 0 40px #FFD700;">👑</div>
                 </div>
                 <h1 class="glow-text">Священная Империя</h1>
                 <p style="color: var(--primary-blue); font-weight: 900; letter-spacing: 5px; font-size: 1.5em; text-align: center;">ОФИЦИАЛЬНЫЙ САЙТ КЛУБА В BRAWL STARS</p>
@@ -295,14 +295,21 @@
     <script>
         Reveal.initialize({
             hash: true,
-            controls: false,
+            controls: true, // Включил стрелочки обратно!
             progress: true,
-            center: false, // Changed to false to allow scrolling top-down text
+            center: true, // Включил центрирование обратно, чтобы не было пустых дыр снизу
             transition: 'slide', 
             backgroundTransition: 'fade',
             margin: 0.1,
             minScale: 0.2,
             maxScale: 2.0
+        });
+
+        // Клик по экрану (но не по iframe) переключает на следующий слайд
+        document.body.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'IFRAME' && !e.target.closest('.controls')) {
+                Reveal.next();
+            }
         });
 
         // Golden particles
