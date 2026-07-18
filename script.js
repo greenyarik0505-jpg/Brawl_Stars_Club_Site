@@ -633,6 +633,11 @@ function attemptAdminLogin() {
         ADMIN_SECRET_CODE = window.BRAWL_CLUB_CONFIG.adminPassword;
     }
 
+    // Динамически загружаем актуальный пароль из config.js на случай, если он загрузился позже script.js
+    if (window.BRAWL_CLUB_CONFIG && window.BRAWL_CLUB_CONFIG.adminPassword) {
+        ADMIN_SECRET_CODE = window.BRAWL_CLUB_CONFIG.adminPassword;
+    }
+
     if (password === ADMIN_SECRET_CODE) {
         // Успешный вход
         isAdminAuthenticated = true;
