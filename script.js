@@ -160,8 +160,10 @@ function loadState() {
                 // Перерисовываем UI при каждом изменении базы
                 renderUI();
             } else {
-                // Если база пустая (первый запуск), записываем туда дефолтные данные
-                saveState();
+                // Если база пустая, просто используем дефолтные данные
+                // НЕ вызываем saveState() автоматически, чтобы избежать цикла ошибок Permission Denied
+                clubData = deepClone(DEFAULT_CLUB_DATA);
+                renderUI();
             }
         }, (error) => {
             console.error("Ошибка чтения Firebase:", error);
