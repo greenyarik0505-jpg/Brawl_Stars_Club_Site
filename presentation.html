@@ -337,9 +337,15 @@
 
         // Click on background advances slide
         document.body.addEventListener('click', function(e) {
-            if (e.target.tagName !== 'IFRAME' && !e.target.closest('.controls')) {
-                Reveal.next();
+            // Игнорируем клики по ссылкам, кнопкам, iframe и самим макетам
+            if (e.target.closest('.controls') || 
+                e.target.closest('a') || 
+                e.target.closest('.browser-mockup') || 
+                e.target.closest('.phone-mockup') || 
+                e.target.tagName === 'IFRAME') {
+                return;
             }
+            Reveal.next();
         });
 
         // Force desktop view on mobile for the PC mockup
