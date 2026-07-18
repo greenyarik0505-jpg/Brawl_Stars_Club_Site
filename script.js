@@ -742,11 +742,6 @@ function setupAdminAuth() {
         loginSubmit.addEventListener("click", () => attemptAdminLogin());
     }
 
-    const googleLoginBtn = document.getElementById("adminGoogleLoginBtn");
-    if (googleLoginBtn) {
-        googleLoginBtn.addEventListener("click", () => attemptGoogleLogin());
-    }
-
     // Enter в поле пароля
     if (passwordInput) {
         passwordInput.addEventListener("keydown", (e) => {
@@ -776,29 +771,6 @@ function setupAdminAuth() {
                 showToast("Вы вышли из админ-панели", "info");
             }).catch(err => console.error("Ошибка при выходе", err));
         });
-    }
-}
-
-/**
- * Вход через Google
- */
-async function attemptGoogleLogin() {
-    const loginModal = document.getElementById("adminLoginModal");
-    const provider = new firebase.auth.GoogleAuthProvider();
-    
-    try {
-        await firebase.auth().signInWithPopup(provider);
-        showToast("Успешный вход через Google!", "success");
-        if (loginModal) loginModal.style.display = "none";
-        switchTab("admin");
-    } catch (error) {
-        console.error("Google Auth error:", error);
-        showToast("Ошибка входа через Google!", "error");
-        const modalContent = loginModal ? loginModal.querySelector(".modal-content") : null;
-        if (modalContent) {
-            modalContent.classList.add("shake");
-            setTimeout(() => modalContent.classList.remove("shake"), 500);
-        }
     }
 }
 
