@@ -485,6 +485,29 @@ function setupFilters() {
             renderAchievements();
         });
     });
+
+    // Вкладки в админ-панели
+    const adminTabBtns = document.querySelectorAll(".admin-tab-btn");
+    adminTabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            adminTabBtns.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            const targetTab = btn.getAttribute("data-admin-tab");
+
+            // Скрываем все секции
+            document.querySelectorAll(".admin-sub-section").forEach((sec) => {
+                sec.style.display = "none";
+                sec.classList.remove("active");
+            });
+
+            // Показываем нужную
+            const targetSection = document.getElementById(`admin-${targetTab}-section`);
+            if (targetSection) {
+                targetSection.style.display = "block";
+                targetSection.classList.add("active");
+            }
+        });
+    });
 }
 
 /**

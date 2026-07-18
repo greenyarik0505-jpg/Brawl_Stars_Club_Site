@@ -276,11 +276,20 @@
                         <!-- Рендерится из JS -->
                     </div>
 
-                    <!-- Сетка управления -->
-                    <div class="admin-grid-layout">
+                    <!-- Вкладки управления -->
+                    <div class="filter-controls admin-tab-controls">
+                        <button class="btn btn-sm btn-secondary admin-tab-btn active" data-admin-tab="settings">⚙️ Настройки</button>
+                        <button class="btn btn-sm btn-secondary admin-tab-btn" data-admin-tab="news">📰 Новости</button>
+                        <button class="btn btn-sm btn-secondary admin-tab-btn" data-admin-tab="members">👥 Участники</button>
+                        <button class="btn btn-sm btn-secondary admin-tab-btn" data-admin-tab="events">📅 События</button>
+                        <button class="btn btn-sm btn-secondary admin-tab-btn" data-admin-tab="gallery">🖼️ Галерея</button>
+                        <button class="btn btn-sm btn-secondary admin-tab-btn" data-admin-tab="achievements">🏆 Достижения</button>
+                    </div>
+
+                    <div class="admin-content-layout">
 
                         <!-- Настройки клуба -->
-                        <div class="admin-subcard col-span-2">
+                        <div class="admin-subcard admin-sub-section active" id="admin-settings-section">
                             <h3>⚙️ Настройки клуба</h3>
                             <form id="clubSettingsForm">
                                 <div class="form-row">
@@ -312,7 +321,7 @@
                         </div>
 
                         <!-- Управление новостями -->
-                        <div class="admin-subcard">
+                        <div class="admin-subcard admin-sub-section" id="admin-news-section" style="display: none;">
                             <div class="subcard-header-flex">
                                 <h3>📰 Новости</h3>
                                 <button class="btn btn-sm btn-primary" id="addNewsBtn">+ Добавить</button>
@@ -334,7 +343,7 @@
                         </div>
 
                         <!-- Управление участниками -->
-                        <div class="admin-subcard">
+                        <div class="admin-subcard admin-sub-section" id="admin-members-section" style="display: none;">
                             <div class="subcard-header-flex">
                                 <h3>👥 Участники</h3>
                                 <button class="btn btn-sm btn-primary" id="addMemberBtn">+ Добавить</button>
@@ -358,7 +367,7 @@
                         </div>
 
                         <!-- Управление событиями -->
-                        <div class="admin-subcard">
+                        <div class="admin-subcard admin-sub-section" id="admin-events-section" style="display: none;">
                             <div class="subcard-header-flex">
                                 <h3>📅 События</h3>
                                 <button class="btn btn-sm btn-primary" id="addEventBtn">+ Добавить</button>
@@ -381,7 +390,7 @@
                         </div>
 
                         <!-- Управление галереей -->
-                        <div class="admin-subcard">
+                        <div class="admin-subcard admin-sub-section" id="admin-gallery-section" style="display: none;">
                             <div class="subcard-header-flex">
                                 <h3>🖼️ Галерея</h3>
                                 <button class="btn btn-sm btn-primary" id="addGalleryBtn">+ Добавить фото</button>
@@ -403,10 +412,10 @@
                         </div>
 
                         <!-- Управление залом достижений -->
-                        <div class="admin-subcard col-span-2">
+                        <div class="admin-subcard admin-sub-section" id="admin-achievements-section" style="display: none;">
                             <div class="subcard-header-flex">
                                 <h3>🏆 Достижения клуба</h3>
-                                <button class="btn btn-sm btn-primary" id="addAchievementBtn">+ Добавить достижение</button>
+                                <button class="btn btn-sm btn-primary" id="addAchievementBtn">+ Добавить</button>
                             </div>
                             <div class="admin-table-wrapper">
                                 <table class="admin-table">
@@ -415,7 +424,7 @@
                                             <th>Тип</th>
                                             <th>Период</th>
                                             <th>Игрок(и)</th>
-                                            <th>Значение/Рекорд</th>
+                                            <th>Значение</th>
                                             <th>Действия</th>
                                         </tr>
                                     </thead>

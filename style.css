@@ -1219,11 +1219,27 @@ ul, ol { list-style: none; }
   font-size: 0.75rem;
 }
 
-/* ---- Admin Grid Layout ---- */
-.admin-grid-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
+/* ---- Admin Tabs Layout ---- */
+.admin-tab-controls {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: flex-start;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding-bottom: 5px;
+}
+.admin-tab-controls::-webkit-scrollbar {
+  height: 6px;
+}
+.admin-tab-controls::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+.admin-sub-section {
+  display: none;
+}
+.admin-sub-section.active {
+  display: block;
 }
 
 .admin-subcard {
@@ -1240,10 +1256,6 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-}
-
-.col-span-2 {
-  grid-column: span 2;
 }
 
 .subcard-header-flex {
@@ -1879,15 +1891,7 @@ ul, ol { list-style: none; }
    31. RESPONSIVE BREAKPOINTS
    ========================================================== */
 
-/* ---- Admin grid: 2 cols до 992px → 1 col ---- */
-@media (max-width: 992px) {
-  .admin-grid-layout {
-    grid-template-columns: 1fr;
-  }
-  .col-span-2 {
-    grid-column: span 1;
-  }
-}
+/* ---- Admin grid: Removed, using tabs ---- */
 
 /* ---- Гамбургер-меню: от 768px и ниже ---- */
 @media (max-width: 768px) {
