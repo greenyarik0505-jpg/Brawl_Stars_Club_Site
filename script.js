@@ -755,8 +755,7 @@ function setupAdminAuth() {
         togglePasswordBtn.addEventListener("click", () => {
             const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
             passwordInput.setAttribute("type", type);
-            // Меняем иконку (глаз / перечеркнутый глаз)
-            togglePasswordBtn.textContent = type === "password" ? "👁️" : "🙈";
+            togglePasswordBtn.textContent = type === "password" ? "Показать" : "Скрыть";
         });
     }
 
