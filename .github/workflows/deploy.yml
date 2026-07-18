@@ -25,3 +25,6 @@ jobs:
         with:
           folder: .
           branch: gh-pages # Будет деплоиться в ветку gh-pages для авто-публикации на GitHub Pages
+          clean-exclude: |
+            config.js
+
