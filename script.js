@@ -683,6 +683,7 @@ function attemptAdminLogin() {
 
     // Защита от входа с пустым паролем (пока конфиг грузится)
     if (!currentCode) {
+        console.log("Текущее состояние window.BRAWL_CLUB_CONFIG:", window.BRAWL_CLUB_CONFIG);
         showToast("Загрузка настроек безопасности... Попробуйте через секунду", "error");
         return;
     }
