@@ -18,6 +18,7 @@ jobs:
 
       - name: Inject Admin Password from GitHub Secrets 🔐
         run: |
+          sed -i '/config.js/d' .gitignore
           echo "window.BRAWL_CLUB_CONFIG = { adminPassword: '${{ secrets.ADMIN_PASSWORD }}' };" > config.js
 
       - name: Deploy to GitHub Pages 🚀
@@ -25,9 +26,7 @@ jobs:
         with:
           folder: .
           branch: gh-pages # Будет деплоиться в ветку gh-pages для авто-публикации на GitHub Pages
-          clean: false # Отключаем очистку
-          git-config-additional-config: |
-            core.excludesfile=/dev/null
+
 
 
 
