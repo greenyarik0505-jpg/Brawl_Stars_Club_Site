@@ -749,6 +749,17 @@ function setupAdminAuth() {
         });
     }
 
+    // Кнопка "Показать пароль"
+    const togglePasswordBtn = document.getElementById("togglePasswordBtn");
+    if (togglePasswordBtn && passwordInput) {
+        togglePasswordBtn.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            // Меняем иконку (глаз / перечеркнутый глаз)
+            togglePasswordBtn.textContent = type === "password" ? "👁️" : "🙈";
+        });
+    }
+
     // Закрытие модалки
     if (loginClose) {
         loginClose.addEventListener("click", () => {
