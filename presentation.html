@@ -230,6 +230,38 @@
             height: 5px;
             color: var(--primary-gold);
         }
+
+        /* Mobile Adaptations */
+        @media (max-width: 900px) {
+            .reveal h1 { font-size: 3em !important; }
+            .reveal h2 { font-size: 2em !important; }
+            .grid-2 { grid-template-columns: 1fr; gap: 15px; text-align: center; }
+            .grid-3 { grid-template-columns: 1fr 1fr; gap: 15px; }
+            .glass-card { padding: 15px; }
+            .browser-mockup { height: 350px; }
+            .phone-mockup-container { height: 400px; margin-top: 20px; }
+            .phone-mockup { width: 220px; height: 440px; border-width: 8px; }
+            .phone-notch { width: 90px; height: 18px; }
+            
+            /* Center lists when stacked */
+            .grid-2 ul { display: inline-block; text-align: left; margin: 0 auto; }
+            
+            /* Hide excessive content to prevent microscopic scaling */
+            .feature-desc { font-size: 0.9rem !important; }
+            .feature-icon { font-size: 2rem; margin-bottom: 10px; }
+        }
+
+        @media (max-width: 480px) {
+            .reveal h1 { font-size: 2.2em !important; }
+            .reveal h2 { font-size: 1.5em !important; }
+            .grid-3 { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .feature-box { padding: 10px; }
+            .feature-title { font-size: 1rem !important; }
+            .feature-desc { display: none; } /* Hide descriptions on very small phones to save space */
+            .browser-mockup { height: 250px; }
+            
+            .brawl-icon { font-size: 3rem; margin-bottom: 10px; }
+        }
     </style>
 </head>
 <body>
