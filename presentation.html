@@ -139,16 +139,19 @@
         }
         .floating { animation: float 6s ease-in-out infinite; }
 
-        /* Mobile Adaptations */
-        @media (max-width: 900px) {
-            .reveal h1 { font-size: 2.5em !important; }
-            .reveal h2 { font-size: 2em !important; }
-            .reveal p, .reveal li { font-size: 1em !important; }
-            .grid-2 { grid-template-columns: 1fr; gap: 15px; }
-            .glass-card { padding: 15px; }
-            .feature-icon { font-size: 2.5rem; }
-            .browser-mockup { height: 350px; border-width: 2px; }
-            .phone-mockup { width: 220px; height: 440px; border-width: 10px; }
+        /* Mobile Adaptations for 1080p Canvas */
+        @media (max-width: 1080px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 40px; }
+            .browser-mockup { height: 700px; border-width: 6px; }
+            .phone-mockup { width: 500px; height: 1000px; border-width: 16px; margin-top: 40px; }
+            .feature-icon { font-size: 6rem; }
+            .glass-card { padding: 40px; margin-bottom: 30px; }
+            
+            /* Make text even bigger for mobile readability */
+            .reveal h1 { font-size: 6em; }
+            .reveal h2 { font-size: 4.5em; }
+            .reveal h3 { font-size: 2.5em; }
+            .reveal p, .reveal li { font-size: 2em; line-height: 1.5; }
         }
     </style>
 </head>
@@ -303,11 +306,11 @@
             center: true,
             transition: 'slide', 
             backgroundTransition: 'fade',
-            width: isMobile ? 400 : 1400, // Узкий виртуальный экран для телефонов
-            height: isMobile ? 800 : 1000, // Высокий виртуальный экран для телефонов
-            margin: isMobile ? 0.02 : 0.04,
-            minScale: 0.2,
-            maxScale: 2.0
+            width: isMobile ? 1080 : 1400, // Вертикальный холст 1080p для телефонов!
+            height: isMobile ? 1920 : 1000, // Высота 1920p (9:16)
+            margin: isMobile ? 0.05 : 0.04,
+            minScale: 0.1,
+            maxScale: 3.0
         });
 
         // Клик по экрану (но не по iframe) переключает на следующий слайд
