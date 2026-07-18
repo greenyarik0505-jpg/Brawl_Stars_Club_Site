@@ -273,16 +273,15 @@ function showConfirm(message) {
         const noBtn = document.getElementById("confirmNo");
 
         if (!modal || !msgEl || !yesBtn || !noBtn) {
-            // Фолбэк, если HTML не найден
             resolve(confirm(message));
             return;
         }
 
         msgEl.textContent = message;
-        modal.classList.add("active");
+        modal.style.display = "flex";
 
         const cleanup = (result) => {
-            modal.classList.remove("active");
+            modal.style.display = "none";
             yesBtn.removeEventListener("click", onYes);
             noBtn.removeEventListener("click", onNo);
             modal.removeEventListener("click", onBgClick);
