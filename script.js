@@ -153,9 +153,11 @@ function loadState() {
                 clubData = data;
                 
                 // Проверки на наличие массивов (миграции)
-                if (!clubData.events) clubData.events = deepClone(DEFAULT_CLUB_DATA.events);
-                if (!clubData.gallery) clubData.gallery = deepClone(DEFAULT_CLUB_DATA.gallery);
-                if (!clubData.achievements) clubData.achievements = deepClone(DEFAULT_CLUB_DATA.achievements);
+                if (!clubData.news) clubData.news = [];
+                if (!clubData.members) clubData.members = [];
+                if (!clubData.events) clubData.events = [];
+                if (!clubData.gallery) clubData.gallery = [];
+                if (!clubData.achievements) clubData.achievements = [];
                 
                 // Перерисовываем UI при каждом изменении базы
                 renderUI();
