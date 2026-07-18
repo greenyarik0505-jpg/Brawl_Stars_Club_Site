@@ -24,13 +24,32 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        .reveal .slides section {
+        /* 100% Responsive Slides */
+        .reveal .slides {
+            width: 100% !important;
+            height: 100% !important;
+            transform: none !important; /* Disable any leftover scaling */
+            left: 0 !important;
+            top: 0 !important;
+            margin: 0 !important;
+        }
+
+        .reveal .slides > section {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 5% !important;
+            box-sizing: border-box !important;
+            overflow-y: auto !important; /* Enable scrolling if content is too tall on mobile */
             background-color: transparent !important;
             text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .reveal .slides section.center-slide {
             text-align: center;
+            align-items: center;
         }
 
         #particles-js {
@@ -39,7 +58,7 @@
         }
         .reveal { z-index: 1; }
 
-        /* Normal Typography for standard scaling */
+        /* Typography - Base values for PC */
         .reveal h1, .reveal h2, .reveal h3 {
             font-family: 'Russo One', sans-serif;
             text-transform: uppercase;
@@ -47,16 +66,16 @@
             text-shadow: 0 5px 15px rgba(0,0,0,1);
             margin-bottom: 20px;
         }
-        .reveal h1 { font-size: 3em; letter-spacing: 2px; }
-        .reveal h2 { font-size: 2em; color: var(--primary-gold); }
-        .reveal h3 { font-size: 1.5em; color: var(--primary-blue); margin-bottom: 15px; }
+        .reveal h1 { font-size: 3.5rem; letter-spacing: 2px; }
+        .reveal h2 { font-size: 2.5rem; color: var(--primary-gold); }
+        .reveal h3 { font-size: 1.5rem; color: var(--primary-blue); margin-bottom: 15px; }
         
         .reveal p, .reveal li {
             font-family: 'Montserrat', sans-serif;
             font-weight: 400;
-            font-size: 1em; /* Normal size, Reveal will scale it */
+            font-size: 1.2rem; /* Perfect readable size */
             color: #E2E8F0;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .text-gold { color: var(--primary-gold) !important; }
@@ -67,17 +86,19 @@
             background: rgba(20, 20, 20, 0.8);
             border: 2px solid rgba(255, 215, 0, 0.3);
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.8);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; }
         
         .feature-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--primary-blue);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: block;
         }
 
@@ -86,20 +107,23 @@
             border: 2px solid #333;
             background: #000;
             width: 100%;
-            height: 400px;
+            height: 60vh;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
+            margin-top: 20px;
         }
-        .browser-mockup iframe { flex-grow: 1; border: none; }
+        .browser-mockup iframe { flex-grow: 1; border: none; width: 100%; height: 100%; }
 
         .phone-mockup {
-            width: 250px;
-            height: 500px;
+            width: 300px;
+            height: 600px;
             border-radius: 30px;
             border: 10px solid #222;
             background: #000;
             margin: 0 auto;
             position: relative;
+            flex-shrink: 0;
         }
         .phone-mockup iframe { width: 100%; height: 100%; border-radius: 20px; border: none; }
 
@@ -110,13 +134,21 @@
             100% { transform: translateY(0px); }
         }
 
-        /* Standard Mobile Media Query */
+        /* Truly Responsive Mobile Media Query */
         @media (max-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr; gap: 10px; }
-            .reveal h1 { font-size: 2em; }
-            .reveal h2 { font-size: 1.5em; }
-            .reveal p, .reveal li { font-size: 0.9em; }
-            .phone-mockup { width: 200px; height: 400px; }
+            .reveal .slides > section {
+                padding: 20px !important;
+                justify-content: flex-start; /* Prevent vertical centering crunch */
+            }
+            .grid-2 { grid-template-columns: 1fr; gap: 15px; }
+            .reveal h1 { font-size: 2.5rem; }
+            .reveal h2 { font-size: 1.8rem; }
+            .reveal p, .reveal li { font-size: 1.1rem; } /* Slightly larger for mobile readability! */
+            
+            .phone-mockup { width: 100%; max-width: 300px; height: 70vh; min-height: 400px; }
+            .browser-mockup { height: 50vh; }
+            
+            .glass-card { padding: 15px; }
         }
     </style>
 </head>
@@ -128,11 +160,11 @@
             <!-- 1 -->
             <section class="center-slide">
                 <div class="floating" style="margin-bottom: 20px;">
-                    <div style="font-size: 5rem; text-shadow: 0 0 30px #FFD700;">👑</div>
+                    <div style="font-size: 6rem; text-shadow: 0 0 30px #FFD700;">👑</div>
                 </div>
                 <h1>Священная Империя</h1>
-                <p style="color: var(--primary-blue); font-weight: 900; letter-spacing: 2px;">ОФИЦИАЛЬНЫЙ САЙТ КЛУБА В BRAWL STARS</p>
-                <p style="text-align: center; color: #888; font-size: 0.8em; margin-top: 30px;">Используйте стрелки для переключения</p>
+                <p style="color: var(--primary-blue); font-weight: 900; letter-spacing: 2px;">ОФИЦИАЛЬНЫЙ САЙТ КЛУБА</p>
+                <p style="text-align: center; color: #888; font-size: 0.9rem; margin-top: 30px;">Используйте стрелки или свайп для переключения</p>
             </section>
 
             <!-- 2 -->
@@ -156,11 +188,11 @@
                 <div class="grid-2">
                     <div class="glass-card">
                         <h3><i class="fas fa-users text-gold"></i> База Участников</h3>
-                        <p>Интеллектуальный список игроков. Мгновенная сортировка по кубкам и фильтрация по ролям (Президент, Ветеран). Каждый знает своё место в иерархии.</p>
+                        <p>Интеллектуальный список игроков. Мгновенная сортировка по кубкам и фильтрация по ролям. Каждый знает своё место в иерархии.</p>
                     </div>
                     <div class="glass-card">
                         <h3><i class="fas fa-newspaper text-blue"></i> Новостная Лента</h3>
-                        <p>Полноценный блог клуба. Итоги Лиги Клубов, важные объявления от руководства и изменения в правилах. Всё сохраняется в истории.</p>
+                        <p>Полноценный блог клуба. Итоги Лиги Клубов, важные объявления от руководства и изменения в правилах.</p>
                     </div>
                 </div>
             </section>
@@ -183,7 +215,7 @@
             <!-- 5 -->
             <section class="center-slide">
                 <h2><i class="fas fa-desktop"></i> ПК Версия</h2>
-                <p>Вы можете скроллить и кликать прямо здесь!</p>
+                <p>Вы можете скроллить и нажимать меню прямо здесь! 👇</p>
                 <div class="browser-mockup">
                     <iframe data-src="index.html"></iframe>
                 </div>
@@ -191,18 +223,10 @@
 
             <!-- 6 -->
             <section>
-                <div class="grid-2" style="align-items: center;">
-                    <div>
-                        <h2><i class="fas fa-mobile-alt text-blue"></i> Mobile First</h2>
-                        <ul style="margin-left: 20px;">
-                            <li><b>Идеальная адаптация:</b> Сайт подстраивается под любой экран.</li>
-                            <li><b>Удобство:</b> Все кнопки крупные, легко нажимать пальцем.</li>
-                            <li><b>Скорость:</b> Убрана задержка тапа, работает как приложение.</li>
-                        </ul>
-                    </div>
-                    <div class="phone-mockup floating">
-                        <iframe data-src="index.html"></iframe>
-                    </div>
+                <h2><i class="fas fa-mobile-alt text-blue"></i> Mobile First</h2>
+                <p style="margin-bottom: 20px;">Сайт идеально подстраивается под телефоны. Кликните на иконку ☰ в правом верхнем углу меню, чтобы открыть навигацию!</p>
+                <div class="phone-mockup floating">
+                    <iframe data-src="index.html"></iframe>
                 </div>
             </section>
 
@@ -219,7 +243,7 @@
                     </div>
                     <div>
                         <h3 class="text-gold"><i class="fas fa-bolt"></i> Онлайн</h3>
-                        <p>Все обновления (новости, участники) мгновенно сохраняются в облако Firebase.</p>
+                        <p>Все обновления мгновенно сохраняются в облако Firebase.</p>
                     </div>
                 </div>
             </section>
@@ -227,9 +251,9 @@
             <!-- 8 -->
             <section class="center-slide">
                 <div class="brawl-icon floating" style="font-size: 5rem;">👑</div>
-                <h1 class="text-gold" style="font-size: 3em;">САЙТ ГОТОВ</h1>
-                <p style="font-size: 1.2em; margin-bottom: 30px;">Можно приглашать участников!</p>
-                <a href="index.html" style="display: inline-block; background: var(--primary-gold); color: #000; padding: 15px 40px; text-decoration: none; border-radius: 50px; font-weight: 900; font-size: 1.5em;">
+                <h1 class="text-gold" style="font-size: 3.5rem;">САЙТ ГОТОВ</h1>
+                <p style="font-size: 1.5rem; margin-bottom: 30px;">Можно приглашать участников!</p>
+                <a href="index.html" style="display: inline-block; background: var(--primary-gold); color: #000; padding: 15px 40px; text-decoration: none; border-radius: 50px; font-weight: 900; font-size: 1.2rem;">
                     ПЕРЕЙТИ НА САЙТ
                 </a>
             </section>
@@ -245,16 +269,17 @@
             hash: true,
             controls: true,
             progress: true,
-            center: true,
+            center: false,
             transition: 'slide', 
             backgroundTransition: 'fade',
-            width: 960,  // Стандартная ширина
-            height: 700, // Стандартная высота
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0
+            width: "100%",  // Fully responsive 100% width
+            height: "100%", // Fully responsive 100% height
+            margin: 0,
+            minScale: 1, // Disable auto-scaling
+            maxScale: 1  // Disable auto-scaling
         });
 
+        // Click on background advances slide
         document.body.addEventListener('click', function(e) {
             if (e.target.tagName !== 'IFRAME' && !e.target.closest('.controls')) {
                 Reveal.next();
