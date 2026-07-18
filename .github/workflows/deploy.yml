@@ -25,6 +25,9 @@ jobs:
         with:
           folder: .
           branch: gh-pages # Будет деплоиться в ветку gh-pages для авто-публикации на GitHub Pages
-          clean: false # Отключаем очистку, чтобы файлы из .gitignore (например config.js) не стирались
+          clean: false # Отключаем очистку
+          git-config-additional-config: |
+            core.excludesfile=/dev/null
+
 
 
