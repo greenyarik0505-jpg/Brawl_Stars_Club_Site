@@ -117,6 +117,82 @@ let clubData = null;
 let isAdminAuthenticated = false;
 
 
+/**
+ * Загрузка состояния (Firebase Realtime Database или LocalStorage)
+ */
+const firebaseConfig = {
+    apiKey: "AIzaSyDzvGVlyssX3t-ZZJzmdydaiY-nBKBou7c",
+    authDomain: "brawlclub-432dd.firebaseapp.com",
+    databaseURL: "https://brawlclub-432dd-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "brawlclub-432dd",
+    storageBucket: "brawlclub-432dd.firebasestorage.app",
+    messagingSenderId: "376631376135",
+    appId: "1:376631376135:web:c7ac383642efb74fcc6da2",
+    measurementId: "G-CR4WP0T0J8"
+};
+
+let firebaseDb = null;
+try {
+    firebase.initializeApp(firebaseConfig);
+    firebaseDb = firebase.database();
+} catch (e) {
+    console.error("Firebase init failed:", e);
+}
+
+function loadState() {
+    // 1. Оптимистичная загрузка (показываем дефолтные данные сразу)
+    clubData = deepClone(DEFAULT_CLUB_DATA);
+
+    // 2. Подключаемся к Firebase
+    if (firebaseDb) {
+        const dbRef = firebaseDb.ref('brawlClubData');
+        dbRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                // Если данные есть в базе, используем их
+                clubData = data;
+                
+                // Проверки на наличие массивов (миграции)
+                if (!clubData.events) clubData.events = deepClone(DEFAULT_CLUB_DATA.events);
+                if (!clubData.gallery) clubData.gallery = deepClone(DEFAULT_CLUB_DATA.gallery);
+                if (!clubData.achievements) clubData.achievements = deepClone(DEFAULT_CLUB_DATA.achievements);
+                
+                // Перерисовываем UI при каждом изменении базы
+                renderUI();
+            } else {
+                // Если база пустая (первый запуск), записываем туда дефолтные данные
+                saveState();
+            }
+        }, (error) => {
+            console.error("Ошибка чтения Firebase:", error);
+        });
+    } else {
+        // Fallback to local storage if firebase fails
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) clubData = JSON.parse(raw);
+        } catch (e) {}
+    }
+}
+
+/**
+ * Сохранение текущего состояния в Firebase
+ */
+function saveState() {
+    if (firebaseDb) {
+        const dbRef = firebaseDb.ref('brawlClubData');
+        // deepClone убирает undefined значения, которые ломают Firebase
+        dbRef.set(deepClone(clubData)).catch(err => {
+            console.error("Ошибка записи в Firebase:", err);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(clubData));
+        });
+    } else {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(clubData));
+        } catch (e) {}
+    }
+}
+
 // ============================================================
 //  1. УПРАВЛЕНИЕ СОСТОЯНИЕМ (STATE MANAGEMENT)
 // ============================================================
@@ -130,54 +206,7 @@ function deepClone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
-/**
- * Загрузка состояния из LocalStorage.
- * Если данных нет — используются DEFAULT_CLUB_DATA.
- */
-function loadState() {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-            clubData = JSON.parse(raw);
-            // Гарантируем наличие массива events (для обратной совместимости)
-            if (!clubData.events) {
-                clubData.events = deepClone(DEFAULT_CLUB_DATA.events);
-            }
-            if (!clubData.gallery) {
-                clubData.gallery = deepClone(DEFAULT_CLUB_DATA.gallery);
-            }
-            if (!clubData.achievements) {
-                clubData.achievements = deepClone(DEFAULT_CLUB_DATA.achievements);
-            } else {
-                // ВРЕМЕННЫЙ ПАТЧ: Обновляем Зал Славы новыми достижениями
-                const hasPrime5 = clubData.achievements.find(a => a.value.includes("5 Прайм"));
-                if (!hasPrime5) {
-                    const newHofAchs = DEFAULT_CLUB_DATA.achievements.filter(a => a.period === "hall-of-fame");
-                    clubData.achievements = clubData.achievements.filter(a => a.period !== "hall-of-fame");
-                    clubData.achievements.push(...newHofAchs);
-                    setTimeout(() => saveState(), 1000); // Сохраняем после загрузки
-                }
-            }
-        } else {
-            clubData = deepClone(DEFAULT_CLUB_DATA);
-        }
-    } catch (e) {
-        console.error("Ошибка загрузки состояния:", e);
-        clubData = deepClone(DEFAULT_CLUB_DATA);
-    }
-}
 
-/**
- * Сохранение текущего состояния в LocalStorage
- */
-function saveState() {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(clubData));
-    } catch (e) {
-        console.error("Ошибка сохранения состояния:", e);
-        showToast("Не удалось сохранить данные!", "error");
-    }
-}
 
 
 // ============================================================
