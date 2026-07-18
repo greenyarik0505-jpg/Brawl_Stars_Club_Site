@@ -279,10 +279,10 @@ function showConfirm(message) {
         }
 
         msgEl.textContent = message;
-        modal.style.display = "flex";
+        modal.classList.add("active");
 
         const cleanup = (result) => {
-            modal.style.display = "none";
+            modal.classList.remove("active");
             yesBtn.removeEventListener("click", onYes);
             noBtn.removeEventListener("click", onNo);
             modal.removeEventListener("click", onBgClick);
@@ -1001,10 +1001,13 @@ function saveNewsFromModal() {
 }
 
 /**
- * Удалить новость по ID
+ * Удалить новость по ID (с подтверждением)
  * @param {string} newsId
  */
-function deleteNews(newsId) {
+async function deleteNews(newsId) {
+    const confirmed = await showConfirm("Удалить эту новость? Действие нельзя отменить.");
+    if (!confirmed) return;
+
     clubData.news = clubData.news.filter((n) => n.id !== newsId);
     saveState();
     renderUI();
@@ -1099,14 +1102,17 @@ function saveMemberFromModal() {
 }
 
 /**
- * Удалить участника
+ * Удалить участника (с подтверждением)
  * @param {string} memberId
  */
-function deleteMember(memberId) {
+async function deleteMember(memberId) {
+    const confirmed = await showConfirm("Удалить этого участника?");
+    if (!confirmed) return;
+
     clubData.members = clubData.members.filter((m) => m.id !== memberId);
     saveState();
     renderUI();
-    showToast("Участник удален", "info");
+    showToast("Участник удалён", "info");
 }
 
 
@@ -1197,10 +1203,13 @@ function saveEventFromModal() {
 }
 
 /**
- * Удалить событие
+ * Удалить событие (с подтверждением)
  * @param {string} eventId
  */
-function deleteEvent(eventId) {
+async function deleteEvent(eventId) {
+    const confirmed = await showConfirm("Удалить это событие?");
+    if (!confirmed) return;
+
     clubData.events = clubData.events.filter((ev) => ev.id !== eventId);
     saveState();
     renderUI();
