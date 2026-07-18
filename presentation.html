@@ -68,9 +68,9 @@
         
         .reveal p, .reveal li {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-            font-size: 1.2em; /* Readable text */
-            color: #E2E8F0;
+            font-weight: 600; /* Bold text for visibility */
+            font-size: 1.6em; /* Increased size */
+            color: #FFFFFF; /* Pure white for max contrast */
             line-height: 1.6;
         }
 
@@ -300,7 +300,9 @@
             center: true, // Включил центрирование обратно, чтобы не было пустых дыр снизу
             transition: 'slide', 
             backgroundTransition: 'fade',
-            margin: 0.1,
+            width: 1400, // Увеличиваем виртуальную ширину
+            height: 1000, // Увеличиваем виртуальную высоту (чтобы не сжимало текст)
+            margin: 0.04,
             minScale: 0.2,
             maxScale: 2.0
         });
