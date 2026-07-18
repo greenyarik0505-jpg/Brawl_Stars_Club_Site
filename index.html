@@ -199,14 +199,20 @@
 
         <!-- ======================== ЗАЛ ДОСТИЖЕНИЙ ======================== -->
         <section id="achievements-section" class="content-section tab-content">
-            <div class="section-header-flex">
-                <h2>🏆 Зал достижений</h2>
-                <div class="filter-controls ach-tab-controls">
-                    <button class="btn btn-sm btn-secondary ach-tab-btn active" data-ach-tab="hall-of-fame">⭐ Зал славы</button>
-                    <button class="btn btn-sm btn-secondary ach-tab-btn" data-ach-tab="week">📅 За неделю</button>
-                    <button class="btn btn-sm btn-secondary ach-tab-btn" data-ach-tab="month">🗓️ За месяц</button>
-                    <button class="btn btn-sm btn-secondary ach-tab-btn" data-ach-tab="year">⏳ За год</button>
-                    <button class="btn btn-sm btn-secondary ach-tab-btn" data-ach-tab="alltime">♾️ За все время</button>
+            <div class="section-header-flex" style="flex-direction: column; align-items: flex-start; gap: 1rem;">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <h2>🏆 Зал достижений</h2>
+                    <div class="filter-controls ach-main-tabs">
+                        <button class="btn btn-secondary ach-main-tab active" data-main-tab="hall-of-fame">⭐ Зал славы</button>
+                        <button class="btn btn-secondary ach-main-tab" data-main-tab="players">🏅 Достижения игроков</button>
+                    </div>
+                </div>
+                
+                <div class="filter-controls ach-period-tabs" id="achPeriodTabs" style="display: none; width: 100%; padding-bottom: 0.5rem; overflow-x: auto;">
+                    <button class="btn btn-sm btn-secondary ach-period-tab active" data-period="week">📅 За неделю</button>
+                    <button class="btn btn-sm btn-secondary ach-period-tab" data-period="month">🗓️ За месяц</button>
+                    <button class="btn btn-sm btn-secondary ach-period-tab" data-period="year">⏳ За год</button>
+                    <button class="btn btn-sm btn-secondary ach-period-tab" data-period="alltime">♾️ За все время</button>
                 </div>
             </div>
 

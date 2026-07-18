@@ -475,13 +475,31 @@ function setupFilters() {
         sortSelect.addEventListener("change", () => renderMembersList());
     }
 
-    // Вкладки в зале достижений
-    const achButtons = document.querySelectorAll(".ach-tab-btn");
-    achButtons.forEach((btn) => {
+    // Вкладки в зале достижений (Main)
+    const achMainBtns = document.querySelectorAll(".ach-main-tab");
+    const achPeriodTabsContainer = document.getElementById("achPeriodTabs");
+    achMainBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
-            achButtons.forEach((b) => b.classList.remove("active"));
+            achMainBtns.forEach((b) => b.classList.remove("active"));
             btn.classList.add("active");
-            currentActiveAchTab = btn.getAttribute("data-ach-tab");
+            currentMainAchTab = btn.getAttribute("data-main-tab");
+            
+            if (currentMainAchTab === "players") {
+                if (achPeriodTabsContainer) achPeriodTabsContainer.style.display = "flex";
+            } else {
+                if (achPeriodTabsContainer) achPeriodTabsContainer.style.display = "none";
+            }
+            renderAchievements();
+        });
+    });
+
+    // Вкладки периодов в зале достижений
+    const achPeriodBtns = document.querySelectorAll(".ach-period-tab");
+    achPeriodBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            achPeriodBtns.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentPeriodAchTab = btn.getAttribute("data-period");
             renderAchievements();
         });
     });
@@ -1594,7 +1612,8 @@ function renderMembersList() {
 }
 
 /** Текущая активная вкладка достижений */
-let currentActiveAchTab = "hall-of-fame";
+let currentMainAchTab = "hall-of-fame";
+let currentPeriodAchTab = "week";
 
 /**
  * Рендеринг карточек достижений по выбранному периоду
@@ -1604,8 +1623,14 @@ function renderAchievements() {
     if (!container) return;
 
     const achievements = clubData.achievements || [];
+    
     // Фильтруем по периоду
-    const filtered = achievements.filter((ach) => ach.period === currentActiveAchTab);
+    let filtered = [];
+    if (currentMainAchTab === "hall-of-fame") {
+        filtered = achievements.filter((ach) => ach.period === "hall-of-fame");
+    } else {
+        filtered = achievements.filter((ach) => ach.period === currentPeriodAchTab);
+    }
 
     if (!filtered.length) {
         container.innerHTML = '<p class="empty-message" style="grid-column: span 3; text-align: center; padding: 3rem 0;">В этой категории пока нет достижений 🏆</p>';
