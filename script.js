@@ -23,6 +23,15 @@ if (window.BRAWL_CLUB_CONFIG && window.BRAWL_CLUB_CONFIG.adminPassword) {
     ADMIN_SECRET_CODE = window.BRAWL_CLUB_CONFIG.adminPassword;
 }
 
+// Вспомогательная функция для получения актуального пароля
+function getAdminSecretCode() {
+    if (window.BRAWL_CLUB_CONFIG && window.BRAWL_CLUB_CONFIG.adminPassword) {
+        return window.BRAWL_CLUB_CONFIG.adminPassword;
+    }
+    return ADMIN_SECRET_CODE;
+}
+
+
 /** Ключ для хранения данных в LocalStorage */
 const STORAGE_KEY = "brawlClubData";
 
@@ -649,19 +658,16 @@ function attemptAdminLogin() {
     const loginModal = document.getElementById("adminLoginModal");
     const password = passwordInput ? passwordInput.value.trim() : "";
 
-    // Динамически загружаем актуальный пароль из config.js на случай, если он загрузился позже script.js
-    if (window.BRAWL_CLUB_CONFIG && window.BRAWL_CLUB_CONFIG.adminPassword) {
-        ADMIN_SECRET_CODE = window.BRAWL_CLUB_CONFIG.adminPassword;
-    }
+    const currentCode = getAdminSecretCode();
 
     // Защита от входа с пустым паролем (пока конфиг грузится)
-    if (!ADMIN_SECRET_CODE) {
+    if (!currentCode) {
         showToast("Загрузка настроек безопасности... Попробуйте через секунду", "error");
         return;
     }
 
 
-    if (password === ADMIN_SECRET_CODE) {
+    if (password === currentCode) {
         // Успешный вход
         isAdminAuthenticated = true;
         if (loginModal) loginModal.style.display = "none";
