@@ -317,10 +317,10 @@ function switchTab(tabId) {
     // Скрываем или показываем Hero Banner в зависимости от вкладки
     const heroBanner = document.querySelector(".hero-banner");
     if (heroBanner) {
-        if (tabId === "admin") {
-            heroBanner.style.display = "none";
-        } else {
+        if (tabId === "club") {
             heroBanner.style.display = "flex";
+        } else {
+            heroBanner.style.display = "none";
         }
     }
 }
