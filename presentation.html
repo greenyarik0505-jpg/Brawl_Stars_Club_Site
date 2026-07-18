@@ -160,18 +160,7 @@
             .reveal p, .reveal li { font-size: 1.1rem; } /* Slightly larger for mobile readability! */
             
             .phone-mockup { width: 100%; max-width: 300px; height: 70vh; min-height: 400px; }
-            .browser-mockup { height: 50vh; }
-            
-            /* Force desktop view inside the iframe via CSS */
-            .browser-mockup iframe {
-                width: 1280px !important;
-                height: 2500px !important; /* Huge height so it doesn't leave empty space when scaled */
-                transform: scale(calc((100vw - 40px) / 1280)) !important;
-                transform-origin: top left !important;
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-            }
+            .browser-mockup { height: auto; min-height: 0; }
             
             .glass-card { padding: 15px; }
         }
@@ -351,6 +340,41 @@
             }
             Reveal.next();
         });
+
+        // Настоящее кроссбраузерное масштабирование ПК-версии
+        function fixDesktopMockup() {
+            const browserMockup = document.querySelector('.browser-mockup');
+            if (!browserMockup) return;
+            const iframe = browserMockup.querySelector('iframe');
+            
+            if (window.innerWidth <= 768) {
+                const targetWidth = 1280;
+                const targetHeight = 800; // фиксированная высота для ПК
+                // Ширина экрана минус отступы по краям
+                const availableWidth = window.innerWidth - 40; 
+                const scale = availableWidth / targetWidth;
+                
+                iframe.style.width = targetWidth + 'px';
+                iframe.style.height = targetHeight + 'px';
+                iframe.style.transform = `scale(${scale})`;
+                iframe.style.transformOrigin = '0 0';
+                iframe.style.position = 'absolute';
+                iframe.style.top = '0';
+                iframe.style.left = '0';
+                
+                // Подгоняем высоту самого макета, чтобы не было черных дыр
+                browserMockup.style.height = (targetHeight * scale) + 'px';
+            } else {
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.transform = 'none';
+                iframe.style.position = 'static';
+                browserMockup.style.height = '60vh';
+            }
+        }
+        
+        window.addEventListener('resize', fixDesktopMockup);
+        fixDesktopMockup(); // Вызываем сразу
 
         particlesJS("particles-js", {
             "particles": {
