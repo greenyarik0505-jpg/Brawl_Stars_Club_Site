@@ -270,6 +270,14 @@ function setupTabNavigation() {
  * @param {string} tabId - идентификатор вкладки (club, members, news, events, admin)
  */
 function switchTab(tabId) {
+    // Если пытаемся переключиться на админку без авторизации, показываем экран логина
+    if (tabId === "admin" && !isAdminAuthenticated) {
+        const dashboard = document.getElementById("adminDashboard");
+        const loginSection = document.getElementById("adminLoginSection");
+        if (dashboard) dashboard.style.display = "none";
+        if (loginSection) loginSection.style.display = "block";
+    }
+
     // Снимаем active со всех навигационных ссылок
     document.querySelectorAll("[data-tab]").forEach((link) => {
         link.classList.remove("active");
@@ -297,6 +305,7 @@ function switchTab(tabId) {
         }
     }
 }
+
 
 
 // ============================================================
@@ -392,19 +401,31 @@ function setupScrollReveal() {
 
     if (!revealElements.length) return;
 
+    // Сразу активируем элементы, которые уже находятся на экране, чтобы избежать "застревания"
+    revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add("reveal-active");
+        }
+    });
+
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("reveal-active");
-                    observer.unobserve(entry.target); // Один раз — и хватит
+                    observer.unobserve(entry.target);
                 }
             });
         },
-        { threshold: 0.1 }
+        { threshold: 0.05 } // Снизили порог для более надежного срабатывания
     );
 
-    revealElements.forEach((el) => observer.observe(el));
+    revealElements.forEach((el) => {
+        if (!el.classList.contains("reveal-active")) {
+            observer.observe(el);
+        }
+    });
 }
 
 
@@ -633,10 +654,12 @@ function attemptAdminLogin() {
         ADMIN_SECRET_CODE = window.BRAWL_CLUB_CONFIG.adminPassword;
     }
 
-    // Динамически загружаем актуальный пароль из config.js на случай, если он загрузился позже script.js
-    if (window.BRAWL_CLUB_CONFIG && window.BRAWL_CLUB_CONFIG.adminPassword) {
-        ADMIN_SECRET_CODE = window.BRAWL_CLUB_CONFIG.adminPassword;
+    // Защита от входа с пустым паролем (пока конфиг грузится)
+    if (!ADMIN_SECRET_CODE) {
+        showToast("Загрузка настроек безопасности... Попробуйте через секунду", "error");
+        return;
     }
+
 
     if (password === ADMIN_SECRET_CODE) {
         // Успешный вход
