@@ -94,8 +94,14 @@ const DEFAULT_CLUB_DATA = {
         { id: "g4", url: "https://cdn.supercell.com/supercell.com/images/posts/brawl-stars/b5ce4b9f33/1024x0/Header.webp", caption: "62 000 трофеев — Рекорд президента" }
     ],
     achievements: [
-        { id: "ach1", type: "fame", period: "hall-of-fame", players: "✨Cesuis✨, Zharik🔥, BiBr1k", value: "Мастер 3 Прайм" },
-        { id: "ach2", type: "ranked", period: "alltime", players: "farel", value: "Мастер Ранг (#1 Клуба)" },
+        // Зал Славы
+        { id: "hof_prime3", type: "fame", period: "hall-of-fame", players: "✨Cesuis✨", value: "3 Прайм" },
+        { id: "hof_prime4", type: "fame", period: "hall-of-fame", players: "Zharik🔥", value: "4 Прайм" },
+        { id: "hof_prime5", type: "fame", period: "hall-of-fame", players: "BiBr1k", value: "5 Прайм" },
+        { id: "hof_master", type: "ranked", period: "hall-of-fame", players: "farel", value: "Мастер" },
+        { id: "hof_pro", type: "ranked", period: "hall-of-fame", players: "senyakrud", value: "Про Ранг" },
+        
+        // Достижения игроков
         { id: "ach3", type: "wins3v3", period: "week", players: "ęŗbąx❄️", value: "350 побед" },
         { id: "ach4", type: "winsSd", period: "month", players: "⚔️| MAGIM |⚔️", value: "85 побед в ШД" },
         { id: "ach5", type: "wins3v3", period: "year", players: "senyakrud", value: "4,500 побед" }
@@ -142,6 +148,15 @@ function loadState() {
             }
             if (!clubData.achievements) {
                 clubData.achievements = deepClone(DEFAULT_CLUB_DATA.achievements);
+            } else {
+                // ВРЕМЕННЫЙ ПАТЧ: Обновляем Зал Славы новыми достижениями
+                const hasPrime5 = clubData.achievements.find(a => a.value.includes("5 Прайм"));
+                if (!hasPrime5) {
+                    const newHofAchs = DEFAULT_CLUB_DATA.achievements.filter(a => a.period === "hall-of-fame");
+                    clubData.achievements = clubData.achievements.filter(a => a.period !== "hall-of-fame");
+                    clubData.achievements.push(...newHofAchs);
+                    setTimeout(() => saveState(), 1000); // Сохраняем после загрузки
+                }
             }
         } else {
             clubData = deepClone(DEFAULT_CLUB_DATA);
