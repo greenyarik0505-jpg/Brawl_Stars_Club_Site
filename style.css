@@ -511,10 +511,14 @@ ul, ol { list-style: none; }
   color: var(--accent-cyan);
   border: 1.5px solid var(--accent-cyan);
 }
-.btn-secondary:hover {
+.btn-secondary:hover, .btn-secondary.active {
   background: rgba(0, 229, 255, 0.1);
   box-shadow: var(--glow-cyan);
   transform: translateY(-2px);
+}
+.btn-secondary.active {
+  color: var(--bg-primary);
+  background: var(--accent-cyan);
 }
 
 /* Danger (Red) */
