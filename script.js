@@ -1,6 +1,8 @@
 // ============================================================
 // 🎮 Brawl Stars Club — Священная Империя | script.js
 // ============================================================
+const SITE_VERSION = "7";
+console.log("%c🎮 Сайт загружен | Версия: " + SITE_VERSION, "color: #00e5ff; font-size: 16px; font-weight: bold;");
 // Полнофункциональный скрипт для клубного сайта.
 // Содержит: управление состоянием, навигацию, анимации,
 // админ-панель с CRUD для новостей/участников/событий,
@@ -1003,10 +1005,8 @@ function saveNewsFromModal() {
  * Удалить новость по ID (с подтверждением)
  * @param {string} newsId
  */
-async function deleteNews(newsId) {
-    const confirmed = await showConfirm("Удалить эту новость? Действие нельзя отменить.");
-    if (!confirmed) return;
-
+function deleteNews(newsId) {
+    console.log("[v" + SITE_VERSION + "] deleteNews:", newsId);
     clubData.news = clubData.news.filter((n) => n.id !== newsId);
     saveState();
     renderUI();
@@ -1104,10 +1104,8 @@ function saveMemberFromModal() {
  * Удалить участника (с подтверждением)
  * @param {string} memberId
  */
-async function deleteMember(memberId) {
-    const confirmed = await showConfirm("Удалить этого участника?");
-    if (!confirmed) return;
-
+function deleteMember(memberId) {
+    console.log("[v" + SITE_VERSION + "] deleteMember:", memberId);
     clubData.members = clubData.members.filter((m) => m.id !== memberId);
     saveState();
     renderUI();
@@ -1205,10 +1203,8 @@ function saveEventFromModal() {
  * Удалить событие (с подтверждением)
  * @param {string} eventId
  */
-async function deleteEvent(eventId) {
-    const confirmed = await showConfirm("Удалить это событие?");
-    if (!confirmed) return;
-
+function deleteEvent(eventId) {
+    console.log("[v" + SITE_VERSION + "] deleteEvent:", eventId);
     clubData.events = clubData.events.filter((ev) => ev.id !== eventId);
     saveState();
     renderUI();
@@ -1371,10 +1367,8 @@ function saveGalleryFromModal() {
  * Удалить фото из галереи (с подтверждением)
  * @param {string} itemId
  */
-async function deleteGalleryItem(itemId) {
-    const confirmed = await showConfirm("Удалить это фото из галереи?");
-    if (!confirmed) return;
-
+function deleteGalleryItem(itemId) {
+    console.log("[v" + SITE_VERSION + "] deleteGalleryItem:", itemId);
     clubData.gallery = clubData.gallery.filter((g) => g.id !== itemId);
     saveState();
     renderUI();
@@ -1499,10 +1493,8 @@ function saveAchievementFromModal() {
  * Удалить достижение (с подтверждением)
  * @param {string} achId
  */
-async function deleteAchievement(achId) {
-    const confirmed = await showConfirm("Удалить это достижение?");
-    if (!confirmed) return;
-
+function deleteAchievement(achId) {
+    console.log("[v" + SITE_VERSION + "] deleteAchievement:", achId);
     clubData.achievements = clubData.achievements.filter((a) => a.id !== achId);
     saveState();
     renderUI();
