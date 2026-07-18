@@ -1543,6 +1543,36 @@ ul, ol { list-style: none; }
   background: var(--bg-tertiary);
 }
 
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--accent-cyan);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  box-shadow: none;
+  transition: opacity var(--transition-fast);
+}
+
+.toggle-password-btn:hover {
+  opacity: 0.8;
+}
+
+.toggle-password-btn:focus,
+.toggle-password-btn:active {
+  outline: none;
+  box-shadow: none;
+}
+
 .form-group textarea {
   resize: vertical;
   min-height: 90px;
