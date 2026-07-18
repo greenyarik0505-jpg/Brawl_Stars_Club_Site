@@ -704,15 +704,34 @@ function setupAdminAuth() {
     const loginClose = document.getElementById("adminLoginClose");
     const logoutBtn = document.getElementById("adminLogoutBtn");
     const passwordInput = document.getElementById("adminPasswordInput");
+    const emailInput = document.getElementById("adminEmailInput");
+
+    // Подписка на изменение статуса авторизации
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            isAdminAuthenticated = true;
+            if (loginModal) loginModal.style.display = "none";
+            const dashboard = document.getElementById("adminDashboard");
+            const loginSection = document.getElementById("adminLoginSection");
+            if (dashboard) dashboard.style.display = "block";
+            if (loginSection) loginSection.style.display = "none";
+            renderAdminDashboard();
+        } else {
+            isAdminAuthenticated = false;
+            const dashboard = document.getElementById("adminDashboard");
+            const loginSection = document.getElementById("adminLoginSection");
+            if (dashboard) dashboard.style.display = "none";
+            if (loginSection) loginSection.style.display = "block";
+        }
+    });
 
     // Кнопка «Войти» — открыть модалку
     if (loginBtn) {
         loginBtn.addEventListener("click", () => {
             if (loginModal) loginModal.style.display = "flex";
-            if (passwordInput) {
-                passwordInput.value = "";
-                passwordInput.focus();
-            }
+            if (passwordInput) passwordInput.value = "";
+            if (emailInput) emailInput.value = "";
+            if (emailInput) emailInput.focus();
         });
     }
 
@@ -745,13 +764,10 @@ function setupAdminAuth() {
     // Выход из админки
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-            isAdminAuthenticated = false;
-            const dashboard = document.getElementById("adminDashboard");
-            const loginSection = document.getElementById("adminLoginSection");
-            if (dashboard) dashboard.style.display = "none";
-            if (loginSection) loginSection.style.display = "block";
-            switchTab("club");
-            showToast("Вы вышли из админ-панели", "info");
+            firebase.auth().signOut().then(() => {
+                switchTab("club");
+                showToast("Вы вышли из админ-панели", "info");
+            }).catch(err => console.error("Ошибка при выходе", err));
         });
     }
 }
@@ -759,41 +775,27 @@ function setupAdminAuth() {
 /**
  * Попытка входа в админ-панель
  */
-function attemptAdminLogin() {
+async function attemptAdminLogin() {
+    const emailInput = document.getElementById("adminEmailInput");
     const passwordInput = document.getElementById("adminPasswordInput");
     const loginModal = document.getElementById("adminLoginModal");
+    
+    const email = emailInput ? emailInput.value.trim() : "";
     const password = passwordInput ? passwordInput.value.trim() : "";
 
-    const currentCode = getAdminSecretCode();
-
-    // Защита от входа с пустым паролем (пока конфиг грузится)
-    if (!currentCode) {
-        console.log("Текущее состояние window.BRAWL_CLUB_CONFIG:", window.BRAWL_CLUB_CONFIG);
-        showToast("Загрузка настроек безопасности... Попробуйте через секунду", "error");
+    if (!email || !password) {
+        showToast("Введите Email и Пароль!", "error");
         return;
     }
 
-
-    if (password === currentCode) {
-        // Успешный вход
-        isAdminAuthenticated = true;
-        if (loginModal) loginModal.style.display = "none";
-
-        const dashboard = document.getElementById("adminDashboard");
-        const loginSection = document.getElementById("adminLoginSection");
-        if (dashboard) dashboard.style.display = "block";
-        if (loginSection) loginSection.style.display = "none";
-
-        renderAdminDashboard();
-        switchTab("admin");
+    try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
         showToast("Добро пожаловать, Администратор!", "success");
-    } else {
-        // Неудачный вход — тряска
-        showToast("Неверный пароль!", "error");
-        if (passwordInput) {
-            passwordInput.value = "";
-            passwordInput.focus();
-        }
+        if (loginModal) loginModal.style.display = "none";
+        switchTab("admin");
+    } catch (error) {
+        console.error("Auth error:", error);
+        showToast("Неверный Email или Пароль!", "error");
         const modalContent = loginModal ? loginModal.querySelector(".modal-content") : null;
         if (modalContent) {
             modalContent.classList.add("shake");
