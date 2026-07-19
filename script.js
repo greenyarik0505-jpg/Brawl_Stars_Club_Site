@@ -712,24 +712,20 @@ function setupAdminAuth() {
     const passwordInput = document.getElementById("adminPasswordInput");
     const emailInput = document.getElementById("adminEmailInput");
 
-    // Подписка на изменение статуса авторизации
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            isAdminAuthenticated = true;
-            if (loginModal) loginModal.style.display = "none";
-            const dashboard = document.getElementById("adminDashboard");
-            const loginSection = document.getElementById("adminLoginSection");
-            if (dashboard) dashboard.style.display = "block";
-            if (loginSection) loginSection.style.display = "none";
-            renderAdminDashboard();
-        } else {
-            isAdminAuthenticated = false;
-            const dashboard = document.getElementById("adminDashboard");
-            const loginSection = document.getElementById("adminLoginSection");
-            if (dashboard) dashboard.style.display = "none";
-            if (loginSection) loginSection.style.display = "block";
-        }
-    });
+    // Локальная авторизация (Firebase Auth отключен для входа)
+    // Статус хранится просто в переменной isAdminAuthenticated
+    if (isAdminAuthenticated) {
+        const dashboard = document.getElementById("adminDashboard");
+        const loginSection = document.getElementById("adminLoginSection");
+        if (dashboard) dashboard.style.display = "block";
+        if (loginSection) loginSection.style.display = "none";
+        renderAdminDashboard();
+    } else {
+        const dashboard = document.getElementById("adminDashboard");
+        const loginSection = document.getElementById("adminLoginSection");
+        if (dashboard) dashboard.style.display = "none";
+        if (loginSection) loginSection.style.display = "block";
+    }
 
     // Кнопка «Войти» — открыть модалку
     if (loginBtn) {
@@ -780,10 +776,14 @@ function setupAdminAuth() {
     // Выход из админки
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-            firebase.auth().signOut().then(() => {
-                switchTab("club");
-                showToast("Вы вышли из админ-панели", "info");
-            }).catch(err => console.error("Ошибка при выходе", err));
+            isAdminAuthenticated = false;
+            switchTab("club");
+            showToast("Вы вышли из админ-панели", "info");
+            
+            const dashboard = document.getElementById("adminDashboard");
+            const loginSection = document.getElementById("adminLoginSection");
+            if (dashboard) dashboard.style.display = "none";
+            if (loginSection) loginSection.style.display = "block";
         });
     }
 }
@@ -804,17 +804,20 @@ async function attemptAdminLogin() {
         return;
     }
 
-    // Если пользователь ввел email целиком (с @), используем его. 
-    // Иначе добавляем @brawl.com для удобства ввода короткого логина.
-    const email = username.includes("@") ? username : username + "@brawl.com";
-
-    try {
-        await firebase.auth().signInWithEmailAndPassword(email, password);
+    // Жестко заданный пароль для входа (обход Firebase Auth)
+    if (username.toLowerCase() === "cezuis" && password === "cezuis_admin") {
+        isAdminAuthenticated = true;
         showToast("Добро пожаловать, Администратор!", "success");
         if (loginModal) loginModal.style.display = "none";
+        
+        const dashboard = document.getElementById("adminDashboard");
+        const loginSection = document.getElementById("adminLoginSection");
+        if (dashboard) dashboard.style.display = "block";
+        if (loginSection) loginSection.style.display = "none";
+        renderAdminDashboard();
+        
         switchTab("admin");
-    } catch (error) {
-        console.error("Auth error:", error);
+    } else {
         showToast("Неверный Логин или Пароль!", "error");
         const modalContent = loginModal ? loginModal.querySelector(".modal-content") : null;
         if (modalContent) {
