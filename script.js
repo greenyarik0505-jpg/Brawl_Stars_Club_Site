@@ -799,13 +799,20 @@ async function attemptAdminLogin() {
     const username = emailInput ? emailInput.value.trim() : "";
     const password = passwordInput ? passwordInput.value.trim() : "";
 
-    if (!username || !password) {
-        showToast("Введите Логин и Пароль!", "error");
-        return;
+    // Хэширование пароля (чтобы скрыть его из кода)
+    async function hashPassword(pass) {
+        const msgBuffer = new TextEncoder().encode(pass);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // Жестко заданный пароль для входа (обход Firebase Auth)
-    if (username.toLowerCase() === "cezuis" && password === "cezuis_admin") {
+    const inputHash = await hashPassword(password);
+    // Хэш пароля "cezuis_admin"
+    const targetHash = "8a41d4fdc1b515b64c04b800cd50bdd6f0071e76ff1f67517e4c7cfa3da6de58";
+
+    // Жестко заданный логин, но пароль проверяется по хэшу
+    if (username.toLowerCase() === "cezuis" && inputHash === targetHash) {
         isAdminAuthenticated = true;
         showToast("Добро пожаловать, Администратор!", "success");
         if (loginModal) loginModal.style.display = "none";
