@@ -213,20 +213,40 @@ start "" "C:\Python314\pythonw.exe" "D:\Dark_Brotherhod_Site\BrawlUpdater.py"
 
 ---
 
-## 📁 7. Структура Файлов Репозиториев
+## 📁 7. Локальные Пути и Структура Файлов на Диске
 
+### 7.1. Клуб 1: Священная Империя (Holy Empire)
+📂 **Папка проекта:** `D:\Brawl_Stars_Club_Site\`
 ```text
-D:\Brawl_Stars_Club_Site\ (и D:\Dark_Brotherhod_Site\)
-├── index.html                  # Главная страница сайта (табы, модалки, секции)
-├── style.css                   # Стили сайта (цвета, адаптив для телефонов, анимации)
-├── script.js                   # Основной JS (Firebase RTDB + Auth, рендеринг, админка)
+D:\Brawl_Stars_Club_Site\
+├── index.html                  # Главная страница (табы, модалки, правила, заявки)
+├── style.css                   # Оформление (неон, стекло, адаптив под смартфоны)
+├── script.js                   # Основной JS движок (Firebase RTDB + Auth, админка)
 ├── presentation.html           # Интерактивная презентация (Reveal.js)
-├── CNAME                       # Привязанный кастомный домен
-├── BrawlUpdater.py             # VIP-программа синхронизации кубков (Python)
-├── brawl_updater_config.json   # Локальный конфиг с сохранёнными API-ключами (не пушится с секретами)
+├── CNAME                       # Домен (holy-empire-club.eu.cc)
 ├── README.md                   # Краткое описание репозитория
-└── AGENTS.md                   # Полная документация проекта для ИИ и разработчиков
+└── AGENTS.md                   # Полное руководство по проекту для ИИ
 ```
+
+### 7.2. Клуб 2: Dark Brotherhood
+📂 **Папка проекта:** `D:\Dark_Brotherhod_Site\`
+```text
+D:\Dark_Brotherhod_Site\
+├── index.html                  # Главная страница клуба Dark Brotherhood
+├── style.css                   # Оформление и стили
+├── script.js                   # JS движок под базу dark-club-57e07
+├── presentation.html           # Интерактивная презентация Dark Brotherhood
+├── CNAME                       # Домен (dark-brotherhood.eu.cc)
+├── BrawlUpdater.py             # Главный скрипт VIP-автообновления кубков (Python)
+├── brawl_updater_config.json   # Сохранённые ключи и пароли админов для обоих клубов
+├── README.md                   # Краткое описание репозитория
+└── AGENTS.md                   # Полное руководство по проекту для ИИ
+```
+
+### 7.3. Ярлыки и утилиты на ПК
+- **Ярлык запуска автообновления:** `C:\Users\Game X\OneDrive\Desktop\Обновить Кубки Brawl Stars.bat` (и `C:\Users\Yarik\Desktop\Обновить Кубки Brawl Stars.bat`)
+- **Интерпретатор Python:** `C:\Python314\python.exe` и `C:\Python314\pythonw.exe`
+- **Рабочий каталог запуска скрипта:** `D:\Dark_Brotherhod_Site\`
 
 ---
 
