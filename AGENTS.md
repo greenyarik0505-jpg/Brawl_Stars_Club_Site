@@ -74,26 +74,6 @@ git commit -m "feat: описание изменений"
 git push origin master
 ```
 
-### 3.2. Как создать новый 3-й сайт для нового клуба:
-1. Скопировать папку `D:\Dark_Brotherhod_Site` в `D:\New_Club_Site`.
-2. Удалить старую папку `.git`:
-   ```powershell
-   Remove-Item -Recurse -Force "D:\New_Club_Site\.git"
-   ```
-3. Заменить в файлах `index.html`, `script.js`, `presentation.html` и `CNAME` название клуба, тег и домен.
-4. Вставить новый `firebaseConfig` в `script.js`.
-5. Инициализировать и создать репозиторий через GitHub CLI (`gh`):
-   ```powershell
-   cd D:\New_Club_Site
-   git init
-   git config user.email "you@example.com"
-   git config user.name "Your Name"
-   git add .
-   git commit -m "Initial commit for New Club"
-   gh repo create New_Club_Site --public --source=. --remote=origin --push
-   gh api -X POST /repos/greenyarik0505-jpg/New_Club_Site/pages -f "source[branch]=master" -f "source[path]=/"
-   ```
-
 ---
 
 ## 🌍 4. Настройка Доменов и DNS
