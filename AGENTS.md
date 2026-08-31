@@ -19,7 +19,7 @@
 - **Презентация**: Reveal.js.
 - **База данных и бэкенд**: Google Firebase Realtime Database + Firebase Authentication (Email/Password).
 - **Хостинг**: GitHub Pages (Static Hosting) + Custom DNS (домены `.eu.cc`).
-- **Синхронизатор**: Python 3.14 + `customtkinter` + `requests`.
+- **Синхронизатор**: Python + `customtkinter` + `requests`.
 
 ---
 
@@ -168,16 +168,14 @@ gh api -X PUT /repos/greenyarik0505-jpg/Dark_Brotherhod_Site/pages -f cname="dar
 
 ## ⚡ 6. VIP Синхронизатор Кубков (`BrawlUpdater.py`)
 
-Находится в `D:\Dark_Brotherhod_Site\BrawlUpdater.py`.  
-Ярлыки запуска на Рабочем столе:
-- `C:\Users\Game X\OneDrive\Desktop\Обновить Кубки Brawl Stars.bat`
-- `C:\Users\Yarik\Desktop\Обновить Кубки Brawl Stars.bat`
+Находится в папке `D:\Dark_Brotherhod_Site\BrawlUpdater.py`.  
+Запускается через Python или созданный `.bat` файл.
 
-Содержимое `.bat` файла:
+Пример содержимого `.bat` файла:
 ```bat
 @echo off
 cd /d "D:\Dark_Brotherhod_Site"
-start "" "C:\Python314\pythonw.exe" "D:\Dark_Brotherhod_Site\BrawlUpdater.py"
+start "" pythonw "D:\Dark_Brotherhod_Site\BrawlUpdater.py"
 ```
 
 ### Как работает утилита:
@@ -222,11 +220,6 @@ D:\Dark_Brotherhod_Site\
 ├── README.md                   # Краткое описание репозитория
 └── AGENTS.md                   # Полное руководство по проекту для ИИ
 ```
-
-### 7.3. Ярлыки и утилиты на ПК
-- **Ярлык запуска автообновления:** `C:\Users\Game X\OneDrive\Desktop\Обновить Кубки Brawl Stars.bat` (и `C:\Users\Yarik\Desktop\Обновить Кубки Brawl Stars.bat`)
-- **Интерпретатор Python:** `C:\Python314\python.exe` и `C:\Python314\pythonw.exe`
-- **Рабочий каталог запуска скрипта:** `D:\Dark_Brotherhod_Site\`
 
 ---
 
