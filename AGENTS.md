@@ -1,5 +1,7 @@
 # 🎮 Brawl Stars Club Sites — Руководство по Проекту (AGENTS.md)
 
+> Актуальное дополнение: `D:\Brawl_Stars_Clubs\AI_PROJECT_GUIDE.md`. Прочитай его перед работой; старые примеры ниже могут не соответствовать текущей реализации.
+
 > **Документ для разработчиков и ИИ-ассистентов.**  
 > Содержит полное описание архитектуры проекта, ссылки на репозитории, настройки хостинга, доменов, базы данных Firebase и скрипта автообновления кубков.
 
@@ -18,7 +20,7 @@
 - **Фронтенд**: Чистый HTML5, CSS3 (Glassmorphism, Neon Dark Theme, Flexbox/Grid), Vanilla JavaScript (ES6+).
 - **Презентация**: Reveal.js.
 - **База данных и бэкенд**: Google Firebase Realtime Database + Firebase Authentication (Email/Password).
-- **Хостинг**: GitHub Pages (Static Hosting) + Custom DNS (домены `.eu.cc`).
+- **Хостинг**: GitHub Pages (`holy-empire-club.eu.cc`) и Vercel (`dark-brotherhood-club.vercel.app`).
 - **Синхронизатор**: Python + `customtkinter` + `requests`.
 
 ---
@@ -30,7 +32,7 @@
 > У каждого клуба:
 > 1. Свой отдельный репозиторий на GitHub и локальная папка (`Holy_Empire` и `Dark_Brotherhood`).
 > 2. Своя отдельная база данных Firebase (`brawlclub-432dd` vs `dark-club-57e07`).
-> 3. Свой собственный домен (`holy-empire-club.eu.cc` vs `dark-brotherhood.eu.cc`).
+> 3. Свой собственный домен (`holy-empire-club.eu.cc` vs `dark-brotherhood-club.vercel.app`).
 > 4. Свои администраторы, пароли, правила и состав участников.
 > **СТРОГО ЗАПРЕЩЕНО** объединять их базы данных, домены или репозитории в один! Любые изменения вносятся строго изолированно в папку нужного клуба.
 
@@ -41,11 +43,11 @@
 | **Локальная папка** | `D:\Brawl_Stars_Clubs\Holy_Empire` | `D:\Brawl_Stars_Clubs\Dark_Brotherhood` |
 | **GitHub Репозиторий** | [github.com/greenyarik0505-jpg/Brawl_Stars_Club_Site](https://github.com/greenyarik0505-jpg/Brawl_Stars_Club_Site) | [github.com/greenyarik0505-jpg/Dark_Brotherhod_Site](https://github.com/greenyarik0505-jpg/Dark_Brotherhod_Site) |
 | **Ветка деплоя** | `main` | `master` |
-| **Основной домен** | `https://holy-empire-club.eu.cc` | `https://dark-brotherhood.eu.cc` |
+| **Основной домен** | `https://holy-empire-club.eu.cc` | `https://dark-brotherhood-club.vercel.app` |
 | **Резервный URL** | `https://greenyarik0505-jpg.github.io/Brawl_Stars_Club_Site/` | `https://greenyarik0505-jpg.github.io/Dark_Brotherhod_Site/` |
 | **Тег клуба в игре** | `#2QCLRR800` | `#809L8LRUL` |
-| **Админ-панель** | `https://holy-empire-club.eu.cc/#adminka_bs` | `https://dark-brotherhood.eu.cc/#adminka_bs` |
-| **Презентация** | `https://holy-empire-club.eu.cc/presentation.html` | `https://dark-brotherhood.eu.cc/presentation.html` |
+| **Админ-панель** | `https://holy-empire-club.eu.cc/#adminka_bs` | `https://dark-brotherhood-club.vercel.app/#adminka_bs` |
+| **Презентация** | `https://holy-empire-club.eu.cc/presentation.html` | `https://dark-brotherhood-club.vercel.app/presentation.html` |
 | **Firebase Project** | `brawlclub-432dd` | `dark-club-57e07` |
 | **Firebase RTDB URL** | `https://brawlclub-432dd-default-rtdb.europe-west1.firebasedatabase.app` | `https://dark-club-57e07-default-rtdb.europe-west1.firebasedatabase.app` |
 | **Firebase Web API Key** | `AIzaSyDzvGVlyssX3t-ZZJzmdydaiY-nBKBou7c` | `AIzaSyCh14CMKFKwVqtEz6s9mSxKyMmxoEFscFc` |
@@ -85,17 +87,19 @@ git push origin master
 - `185.199.110.153`
 - `185.199.111.153`
 
-### 4.2. Файл CNAME в репозитории:
-В корне проекта лежит файл `CNAME` (без расширения), содержащий одну строчку с доменом, например:
+### 4.2. Файл CNAME в репозитории (Holy Empire):
+В корне проекта Holy Empire лежит файл `CNAME` (без расширения), содержащий одну строчку с доменом:
 ```
-dark-brotherhood.eu.cc
+holy-empire-club.eu.cc
 ```
 При пуше файла `CNAME` GitHub Pages автоматически привязывает домен и выписывает бесплатный SSL-сертификат (HTTPS).
 
-### 4.3. Привязка домена через консоль (GitHub API):
+### 4.3. Деплой Dark Brotherhood в Vercel CLI:
 ```powershell
-gh api -X PUT /repos/greenyarik0505-jpg/Dark_Brotherhod_Site/pages -f cname="dark-brotherhood.eu.cc"
+cd D:\Brawl_Stars_Clubs\Dark_Brotherhood
+vercel --prod
 ```
+Проект привязан к `dark-brotherhood-club` (`https://dark-brotherhood-club.vercel.app`).
 
 ---
 
@@ -211,7 +215,6 @@ start "" pythonw "D:\Brawl_Stars_Clubs\Dark_Brotherhood\BrawlUpdater.py"
     ├── style.css               # Оформление и стили
     ├── script.js               # JS движок под базу dark-club-57e07
     ├── presentation.html       # Интерактивная презентация Dark Brotherhood
-    ├── CNAME                   # Домен (dark-brotherhood.eu.cc)
     ├── BrawlUpdater.py         # Главный скрипт VIP-автообновления кубков (Python)
     ├── brawl_updater_config.json # Сохранённые ключи и пароли админов для обоих клубов
     ├── README.md               # Краткое описание репозитория
